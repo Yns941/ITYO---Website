@@ -645,19 +645,6 @@
     .testi-card.featured:hover { background: rgba(201,168,76,.07); }
     .testi-card:hover::before { transform: scaleX(1); }
     .testi-card:hover::after { opacity: 1; }
-    /* ProfileCard — header avec photo */
-    .testi-profile {
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 28px; position: relative; z-index: 1;
-    }
-    .testi-img {
-      width: 52px; height: 52px; border-radius: 50%;
-      object-fit: cover; flex-shrink: 0;
-      border: 1px solid rgba(201,168,76,.3);
-      filter: grayscale(20%);
-      transition: filter .3s;
-    }
-    .testi-card:hover .testi-img { filter: grayscale(0%); }
     .testi-name {
       font-size: 13px; font-weight: 500;
       color: #F8F5EE; margin-bottom: 3px;
@@ -669,7 +656,7 @@
     .testi-divider {
       width: 100%; height: 1px;
       background: rgba(201,168,76,.1);
-      margin-bottom: 24px; position: relative; z-index: 1;
+      position: relative; z-index: 1;
     }
     .testi-stars {
       font-size: 11px; color: #C9A84C;
@@ -947,14 +934,6 @@
         <div class="testi-grid">
 
           <div class="testi-card reveal">
-            <div class="testi-profile">
-              <img class="testi-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=104&h=104&fit=crop&crop=face" alt="Marie D.">
-              <div>
-                <p class="testi-name">Marie D.</p>
-                <p class="testi-role">Directrice associée · Conseil</p>
-              </div>
-            </div>
-            <div class="testi-divider"></div>
             <div class="testi-stars">★★★★★</div>
             <span class="testi-mark">"</span>
             <p class="testi-quote">
@@ -964,17 +943,12 @@
               <span class="testi-tag">Livré en 5 jours</span>
               <span class="testi-tag highlight">ROI immédiat</span>
             </div>
+            <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
+            <p class="testi-name">Marie D.</p>
+            <p class="testi-role">Directrice associée · Conseil & stratégie</p>
           </div>
 
           <div class="testi-card featured reveal reveal-d1">
-            <div class="testi-profile">
-              <img class="testi-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=104&h=104&fit=crop&crop=face" alt="Thomas R.">
-              <div>
-                <p class="testi-name">Thomas R.</p>
-                <p class="testi-role">Co-fondateur · SaaS B2B</p>
-              </div>
-            </div>
-            <div class="testi-divider"></div>
             <div class="testi-stars">★★★★★</div>
             <span class="testi-mark">"</span>
             <p class="testi-quote">
@@ -984,17 +958,12 @@
               <span class="testi-tag">Prototype en 48h</span>
               <span class="testi-tag highlight">Je recommande</span>
             </div>
+            <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
+            <p class="testi-name">Thomas R.</p>
+            <p class="testi-role">Co-fondateur · SaaS B2B</p>
           </div>
 
           <div class="testi-card reveal reveal-d2">
-            <div class="testi-profile">
-              <img class="testi-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=104&h=104&fit=crop&crop=face" alt="Julien M.">
-              <div>
-                <p class="testi-name">Julien M.</p>
-                <p class="testi-role">Gérant · PME Île-de-France</p>
-              </div>
-            </div>
-            <div class="testi-divider"></div>
             <div class="testi-stars">★★★★★</div>
             <span class="testi-mark">"</span>
             <p class="testi-quote">
@@ -1004,6 +973,9 @@
               <span class="testi-tag">Accompagnement complet</span>
               <span class="testi-tag highlight">Équipe libérée</span>
             </div>
+            <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
+            <p class="testi-name">Julien M.</p>
+            <p class="testi-role">Gérant · PME Île-de-France</p>
           </div>
 
         </div>
