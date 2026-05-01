@@ -783,6 +783,17 @@
             <p>On cartographie vos processus, on identifie le gain le plus rapide, on vous livre un plan d'action concret.</p>
           </div>
         </div>
+
+        <!-- WEB CREATION -->
+        <div class="reveal" style="margin-top: 1px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 48px; padding: 36px 40px; background: rgba(201,168,76,.03); border: 1px solid rgba(201,168,76,.12);">
+          <div>
+            <p style="font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(201,168,76,.55); margin-bottom: 12px;">Et aussi</p>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #F8F5EE; margin-bottom: 10px;">"Je n'ai pas de site, ou le mien date de 2015"</h3>
+            <p style="font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; max-width: 72ch;">On crée des sites web sur mesure — rapides, mobiles, pensés pour convertir. Et on peut les connecter directement à vos automatisations dès le départ : formulaire qui déclenche une réponse automatique, page de devis qui génère une facture.</p>
+          </div>
+          <a class="btn-outline" href="#" onclick="goToContact(); return false;" style="flex-shrink: 0; white-space: nowrap;">Parlez-nous de votre projet →</a>
+        </div>
+
       </div>
     </section>
 
@@ -960,6 +971,43 @@
               <polyline points="45,100 80,74 115,84 150,54 185,68" fill="none" stroke="rgba(248,245,238,.25)" stroke-width="1.5" stroke-dasharray="4,2"/>
               <circle cx="185" cy="68" r="3" fill="#C9A84C"/>
             </svg>
+          </div>
+        </div>
+
+        <!-- SERVICE 4 -->
+        <div class="svc-detail reverse reveal">
+          <div class="svc-detail-visual">
+            <svg width="220" height="160" viewBox="0 0 220 160" fill="none">
+              <rect x="10" y="10" width="200" height="140" rx="3" fill="rgba(27,27,38,.9)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+              <rect x="10" y="10" width="200" height="28" rx="3" fill="rgba(35,35,47,.9)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+              <circle cx="28" cy="24" r="5" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+              <circle cx="44" cy="24" r="5" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+              <circle cx="60" cy="24" r="5" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+              <rect x="76" y="17" width="100" height="14" rx="2" fill="rgba(201,168,76,.06)" stroke="rgba(201,168,76,.15)" stroke-width="1"/>
+              <rect x="28" y="52" width="80" height="8" rx="1" fill="rgba(248,245,238,.12)"/>
+              <rect x="28" y="66" width="120" height="5" rx="1" fill="rgba(248,245,238,.06)"/>
+              <rect x="28" y="76" width="100" height="5" rx="1" fill="rgba(248,245,238,.06)"/>
+              <rect x="28" y="96" width="72" height="24" rx="1" fill="#C9A84C" opacity=".85"/>
+              <text x="64" y="112" text-anchor="middle" fill="#1B1B26" font-size="9" font-family="DM Sans" font-weight="500">Nous contacter</text>
+              <rect x="116" y="48" width="80" height="52" rx="2" fill="rgba(43,43,57,.8)" stroke="rgba(201,168,76,.15)" stroke-width="1"/>
+              <rect x="124" y="56" width="64" height="4" rx="1" fill="rgba(248,245,238,.08)"/>
+              <rect x="124" y="64" width="48" height="4" rx="1" fill="rgba(248,245,238,.08)"/>
+              <rect x="124" y="72" width="56" height="4" rx="1" fill="rgba(248,245,238,.08)"/>
+              <rect x="124" y="84" width="40" height="10" rx="1" fill="rgba(201,168,76,.3)" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="svc-detail-content">
+            <span class="svc-tag">Et aussi · Création web</span>
+            <h2>"Mon site ne reflète plus ce qu'on fait"</h2>
+            <p>
+              Un beau site ne suffit pas sans les processus qui vont avec. On conçoit des sites web sur mesure, rapides, mobiles, pensés pour convertir, et on les connecte directement à vos automatisations. Formulaire de contact qui déclenche une réponse automatique, page de devis qui génère une facture : le site et le back-office avancent ensemble.
+            </p>
+            <ul class="feature-list">
+              <li>Design sur mesure, sans template ni thème générique</li>
+              <li>Rapide, mobile-first, pensé pour convertir</li>
+              <li>Connecté à vos automatisations dès le départ</li>
+              <li>Livré en 2 à 3 semaines selon la complexité</li>
+            </ul>
           </div>
         </div>
 
@@ -1358,7 +1406,7 @@
     const items = [
       'Applications IA sur mesure', 'Facturation automatique', 'Réception client 24h/24',
       'Reporting temps réel', 'Prise de RDV sans secrétaire', 'Documents générés en 30s',
-      'Zéro saisie manuelle', 'PME & Startups', 'Paris', 'Made in France',
+      'Création de site web', 'Zéro saisie manuelle', 'PME & Startups', 'Paris', 'Made in France',
     ];
     const track = document.getElementById('marquee-track');
     [...items, ...items].forEach(txt => {
