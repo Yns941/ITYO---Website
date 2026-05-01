@@ -28,11 +28,6 @@
     }
     #bg-paths svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-    /* ===== FILM GRAIN ===== */
-    #grain {
-      position: fixed; inset: 0;
-      z-index: 1; pointer-events: none; opacity: .025;
-    }
 
     /* ===== LAYOUT ===== */
     .page { display: none; position: relative; z-index: 2; min-height: 100vh; }
@@ -69,8 +64,15 @@
       font-size: 10px; font-weight: 400;
       color: rgba(248,245,238,.45); text-decoration: none;
       letter-spacing: 2.5px; text-transform: uppercase;
-      transition: color .3s;
+      transition: color .25s cubic-bezier(0.22,1,0.36,1);
+      position: relative; padding-bottom: 2px;
     }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: #C9A84C;
+      transition: width .3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a:hover, .nav-links a.active { color: #C9A84C; }
     .nav-cta {
       position: relative; overflow: hidden;
@@ -85,21 +87,27 @@
     .nav-cta::before {
       content: ''; position: absolute; inset: 0;
       background: #C9A84C;
-      transform: translateX(-100%); transition: transform .4s ease; z-index: -1;
+      transform: translateX(-100%); transition: transform .4s cubic-bezier(0.22,1,0.36,1); z-index: -1;
     }
     .nav-cta:hover::before { transform: translateX(0); }
     .nav-cta:hover { color: #1B1B26; }
 
     /* ===== REVEAL ===== */
     .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .8s ease, transform .8s ease;
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .9s cubic-bezier(0.22,1,0.36,1), transform .9s cubic-bezier(0.22,1,0.36,1);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: .1s; }
-    .reveal-d2 { transition-delay: .2s; }
-    .reveal-d3 { transition-delay: .3s; }
-    .reveal-d4 { transition-delay: .4s; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+    .reveal-d3 { transition-delay: .24s; }
+    .reveal-d4 { transition-delay: .32s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: opacity .3s ease; transform: none; }
+      .marquee-track { animation: none; }
+      .hero-badge-dot { animation: none; }
+    }
 
     /* ===== TYPOGRAPHY ===== */
     h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
@@ -142,10 +150,11 @@
       width: 40%; height: 200%;
       background: rgba(255,255,255,.18);
       transform: skewX(-20deg);
-      transition: left .5s ease;
+      transition: left .6s cubic-bezier(0.22,1,0.36,1);
     }
     .btn-gold:hover::after { left: 120%; }
     .btn-gold:hover { background: #E8C96A; }
+    .btn-gold:active { background: #C9A84C; transform: translateY(1px); }
     .btn-outline {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 15px 35px;
@@ -155,9 +164,10 @@
       color: rgba(248,245,238,.75); background: transparent;
       border: 1px solid rgba(201,168,76,.3);
       cursor: pointer; text-decoration: none;
-      transition: color .3s, border-color .3s;
+      transition: color .25s cubic-bezier(0.22,1,0.36,1), border-color .25s cubic-bezier(0.22,1,0.36,1);
     }
     .btn-outline:hover { color: #C9A84C; border-color: rgba(201,168,76,.6); }
+    .btn-outline:active { transform: translateY(1px); }
 
     /* ===== HOME — HERO ===== */
     .hero {
@@ -235,8 +245,9 @@
     .stat-item:last-child { border-right: none; }
     .stat-number {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 42px; font-weight: 300;
-      color: #C9A84C; line-height: 1; margin-bottom: 6px;
+      font-size: clamp(48px, 5vw, 68px); font-weight: 300;
+      color: #C9A84C; line-height: 1; margin-bottom: 8px;
+      letter-spacing: -1px;
     }
     .stat-label {
       font-size: 10px; font-weight: 400;
@@ -274,12 +285,12 @@
       top: 0; left: 0; right: 0; height: 2px;
       background: #C9A84C;
       transform: scaleX(0); transform-origin: left;
-      transition: transform .4s ease;
+      transition: transform .5s cubic-bezier(0.22,1,0.36,1);
     }
     .svc::after {
       content: ''; position: absolute; inset: 0;
       background: radial-gradient(circle at 50% 0%, rgba(201,168,76,.06) 0%, transparent 60%);
-      opacity: 0; transition: opacity .4s;
+      opacity: 0; transition: opacity .4s cubic-bezier(0.22,1,0.36,1);
     }
     .svc:hover { background: #23232F; }
     .svc:hover::before { transform: scaleX(1); }
@@ -296,19 +307,32 @@
     .svc p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; }
 
     /* ===== URGENCY ===== */
-    .urgency-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-    .urgency-card {
-      padding: 40px 32px;
-      border: 1px solid rgba(201,168,76,.14);
-      background: rgba(35,35,47,.35);
+    .urgency-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 1px;
+      background: rgba(201,168,76,.08);
     }
-    .urgency-icon { font-size: 26px; margin-bottom: 20px; }
+    .urgency-card {
+      padding: 48px 40px;
+      background: #1B1B26;
+    }
+    .urgency-card:first-child {
+      padding: 56px 48px;
+      background: rgba(201,168,76,.04);
+    }
+    .urgency-stat {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px; font-weight: 300; color: #C9A84C;
+      line-height: 1; letter-spacing: -2px; margin-bottom: 16px;
+    }
     .urgency-card h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 400;
+      font-size: 20px; font-weight: 400;
       margin-bottom: 12px; color: #F8F5EE;
     }
-    .urgency-card p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; }
+    .urgency-card p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.8; max-width: 52ch; }
 
     /* ===== CTA FINAL ===== */
     .cta-section {
@@ -346,7 +370,7 @@
     }
     .svc-detail-content p {
       font-size: 14px; color: rgba(248,245,238,.6);
-      line-height: 1.85; margin-bottom: 32px;
+      line-height: 1.85; margin-bottom: 32px; max-width: 58ch;
     }
     .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .feature-list li {
@@ -446,29 +470,26 @@
     .proj-row {
       display: grid; grid-template-columns: 1fr auto;
       align-items: center; gap: 20px;
-      padding: 18px 0;
+      padding: 20px 16px;
       border-bottom: 1px solid rgba(201,168,76,.07);
-      cursor: pointer; transition: padding-left .3s;
-      position: relative;
+      cursor: pointer;
+      background: transparent;
+      transition: background .3s cubic-bezier(0.22,1,0.36,1);
     }
-    .proj-row::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0; width: 2px;
-      background: #C9A84C;
-      transform: scaleY(0); transition: transform .3s;
-    }
-    .proj-row:hover { padding-left: 16px; }
-    .proj-row:hover::before { transform: scaleY(1); }
+    .proj-row:hover { background: rgba(201,168,76,.04); }
     .proj-row-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px; font-weight: 300;
-      color: rgba(248,245,238,.65); transition: color .3s;
+      font-size: 20px; font-weight: 300;
+      color: rgba(248,245,238,.6);
+      transition: color .25s cubic-bezier(0.22,1,0.36,1), letter-spacing .3s cubic-bezier(0.22,1,0.36,1);
     }
-    .proj-row:hover .proj-row-name { color: #F8F5EE; }
+    .proj-row:hover .proj-row-name { color: #F8F5EE; letter-spacing: .3px; }
     .proj-row-sector {
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(248,245,238,.22);
+      transition: color .25s cubic-bezier(0.22,1,0.36,1);
     }
+    .proj-row:hover .proj-row-sector { color: rgba(201,168,76,.55); }
 
     /* ===== VISION PAGE ===== */
     .vision-hero { padding: 160px 0 80px; border-bottom: 1px solid rgba(201,168,76,.1); }
@@ -484,7 +505,7 @@
     }
     .manifesto-text p {
       font-size: 15px; color: rgba(248,245,238,.6);
-      line-height: 1.9; margin-bottom: 24px;
+      line-height: 1.9; margin-bottom: 24px; max-width: 62ch;
     }
     .stats-sector {
       display: grid; grid-template-columns: repeat(3,1fr);
@@ -515,7 +536,7 @@
       bottom: 0; left: 0; right: 0; height: 2px;
       background: #C9A84C;
       transform: scaleX(0); transform-origin: left;
-      transition: transform .4s ease;
+      transition: transform .5s cubic-bezier(0.22,1,0.36,1);
     }
     .future-card:hover::after { transform: scaleX(1); }
     .future-horizon {
@@ -588,9 +609,6 @@
 
   <!-- BG PATHS -->
   <div id="bg-paths"></div>
-
-  <!-- FILM GRAIN -->
-  <canvas id="grain"></canvas>
 
   <!-- NAV -->
   <nav id="nav">
@@ -737,17 +755,15 @@
         </div>
         <div class="urgency-grid">
           <div class="urgency-card reveal">
-            <div class="urgency-icon">⏱</div>
-            <h3>28% du temps perdu</h3>
-            <p>C'est la part des heures productives que vos équipes passent sur des tâches répétitives selon McKinsey. Chaque semaine. Sans exception.</p>
+            <div class="urgency-stat">28%</div>
+            <h3>Du temps de travail gaspillé</h3>
+            <p>C'est la part des heures productives que vos équipes passent sur des tâches répétitives. Chaque semaine, sans exception — selon McKinsey.</p>
           </div>
           <div class="urgency-card reveal reveal-d1">
-            <div class="urgency-icon">⚡</div>
             <h3>Vos concurrents s'équipent</h3>
             <p>73% des PME françaises n'ont pas encore automatisé leurs processus clés. Les 27% qui l'ont fait répondent plus vite, à moindre coût.</p>
           </div>
           <div class="urgency-card reveal reveal-d2">
-            <div class="urgency-icon">🎯</div>
             <h3>ROI mesurable dès J+30</h3>
             <p>Nos clients constatent un retour sur investissement en moins d'un mois : moins d'erreurs, moins de relances, plus de temps facturable.</p>
           </div>
@@ -1342,121 +1358,69 @@
     }
     initReveals();
 
-    // ── Film grain ────────────────────────────────────────────
-    const canvas = document.getElementById('grain');
-    const ctx = canvas.getContext('2d');
-    function resizeGrain() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resizeGrain();
-    window.addEventListener('resize', resizeGrain);
-    (function grainLoop() {
-      const img = ctx.createImageData(canvas.width, canvas.height);
-      const d = img.data;
-      for (let i = 0; i < d.length; i += 4) {
-        const v = Math.random() * 255 | 0;
-        d[i] = d[i+1] = d[i+2] = v;
-        d[i+3] = 255;
-      }
-      ctx.putImageData(img, 0, 0);
-      setTimeout(() => requestAnimationFrame(grainLoop), 80);
-    })();
 
     // ── Background SVG paths ──────────────────────────────────
     (function() {
       const container = document.getElementById('bg-paths');
       const ns = 'http://www.w3.org/2000/svg';
 
-      // Shared SVG defs with glow filters
-      function makeDefs() {
-        const defs = document.createElementNS(ns, 'defs');
-        defs.innerHTML = `
-          <filter id="glow-soft" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2.5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-strong" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        `;
-        return defs;
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 1440 900');
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;will-change:transform;';
+      container.appendChild(svg);
+
+      // Mirror layer via CSS — no second SVG to animate
+      const svg2 = svg.cloneNode(false);
+      svg2.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;transform:scale(-1,-1);opacity:.5;';
+      container.appendChild(svg2);
+
+      const paths = [];
+      const TOTAL = 18; // fewer paths = GPU happy
+
+      for (let i = 0; i < TOTAL; i++) {
+        const isAccent = i % 4 === 0;
+        const x0  = -200 + i * 100;
+        const cx1 = x0 + 200 + Math.sin(i * 0.58) * 320;
+        const cy1 = 60  + Math.cos(i * 0.73) * 260;
+        const cx2 = x0 + 550 + Math.cos(i * 0.37) * 360;
+        const cy2 = 540 + Math.sin(i * 0.49) * 260;
+        const x1  = x0 + 850 + Math.sin(i * 0.65) * 180;
+        const d   = `M ${x0} -80 C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x1} 980`;
+
+        // Main path
+        const p = document.createElementNS(ns, 'path');
+        p.setAttribute('d', d);
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', '#C9A84C');
+        p.setAttribute('stroke-width', isAccent ? (1.6 + Math.random() * 0.6).toFixed(2) : (0.6 + Math.random() * 0.5).toFixed(2));
+        p.style.opacity = isAccent ? (0.5 + Math.random() * 0.2).toFixed(2) : (0.1 + Math.random() * 0.12).toFixed(2);
+        const len = 2200 + Math.random() * 1200;
+        p.setAttribute('stroke-dasharray', len);
+        p.setAttribute('stroke-dashoffset', len * 0.5);
+        p._len   = len;
+        p._speed = 0.5 + Math.random() * 1.0;
+        p._phase = Math.random() * Math.PI * 2;
+        svg.appendChild(p);
+
+        // Mirror copy (static clone in svg2, no separate animation needed)
+        const p2 = p.cloneNode();
+        svg2.appendChild(p2);
+
+        paths.push({ p, p2 });
       }
-
-      function buildLayer(flip) {
-        const svg = document.createElementNS(ns, 'svg');
-        svg.setAttribute('viewBox', '0 0 1440 900');
-        svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-        svg.style.cssText = [
-          'position:absolute;inset:0;width:100%;height:100%;',
-          'transform:' + (flip ? 'scale(-1,-1)' : 'none') + ';',
-        ].join('');
-        svg.appendChild(makeDefs());
-
-        const paths = [];
-        const total = 28;
-
-        for (let i = 0; i < total; i++) {
-          const p = document.createElementNS(ns, 'path');
-          const isAccent = i % 5 === 0;
-          const isMid    = i % 5 === 2;
-
-          // Wide dramatic curves across the full viewport
-          const x0  = -300 + i * 68;
-          const cx1 = x0 + 250 + Math.sin(i * 0.58) * 350;
-          const cy1 = 50  + Math.cos(i * 0.73) * 280;
-          const cx2 = x0 + 600 + Math.cos(i * 0.37) * 400;
-          const cy2 = 550 + Math.sin(i * 0.49) * 280;
-          const x1  = x0 + 900 + Math.sin(i * 0.65) * 200;
-
-          p.setAttribute('d', `M ${x0} -100 C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x1} 1000`);
-          p.setAttribute('fill', 'none');
-          p.setAttribute('stroke', '#C9A84C');
-
-          if (isAccent) {
-            p.setAttribute('stroke-width', (1.8 + Math.random() * 0.8).toFixed(2));
-            p.setAttribute('filter', 'url(#glow-strong)');
-            p.style.opacity = (0.45 + Math.random() * 0.25).toFixed(3);
-          } else if (isMid) {
-            p.setAttribute('stroke-width', (1.0 + Math.random() * 0.6).toFixed(2));
-            p.setAttribute('filter', 'url(#glow-soft)');
-            p.style.opacity = (0.22 + Math.random() * 0.18).toFixed(3);
-          } else {
-            p.setAttribute('stroke-width', (0.5 + Math.random() * 0.5).toFixed(2));
-            p.style.opacity = (0.08 + Math.random() * 0.10).toFixed(3);
-          }
-
-          const len = 2000 + Math.random() * 1500;
-          p.setAttribute('stroke-dasharray', len);
-          p.setAttribute('stroke-dashoffset', len * (0.3 + Math.random() * 0.4));
-
-          p._len      = len;
-          p._speed    = 0.6 + Math.random() * 1.4;   // 3× faster than before
-          p._phase    = Math.random() * Math.PI * 2;
-          p._opBase   = parseFloat(p.style.opacity);
-          p._opAmp    = isAccent ? 0.18 : 0.06;
-          p._opSpeed  = 0.4 + Math.random() * 0.8;
-          p._opPhase  = Math.random() * Math.PI * 2;
-
-          svg.appendChild(p);
-          paths.push(p);
-        }
-        return { svg, paths };
-      }
-
-      const l1 = buildLayer(false);
-      const l2 = buildLayer(true);
-      container.appendChild(l1.svg);
-      container.appendChild(l2.svg);
 
       let t = 0;
+      let frame = 0;
       (function animate() {
-        t += 0.009;
-        [...l1.paths, ...l2.paths].forEach(p => {
-          // Dash draw/erase animation — bigger swing for more movement
-          const off = p._len * (0.15 + 0.7 * (0.5 + 0.5 * Math.sin(t * p._speed + p._phase)));
+        t += 0.007;
+        frame++;
+        // Update mirror every other frame — halves the write count
+        const doMirror = frame % 2 === 0;
+        paths.forEach(({ p, p2 }) => {
+          const off = p._len * (0.12 + 0.76 * (0.5 + 0.5 * Math.sin(t * p._speed + p._phase)));
           p.style.strokeDashoffset = off;
-          // Breathing opacity
-          const op = p._opBase + p._opAmp * Math.sin(t * p._opSpeed + p._opPhase);
-          p.style.opacity = Math.max(0.02, op).toFixed(3);
+          if (doMirror) p2.style.strokeDashoffset = off;
         });
         requestAnimationFrame(animate);
       })();
