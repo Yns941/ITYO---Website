@@ -632,7 +632,7 @@
       <li><a href="#" onclick="showPage('projects'); return false;" id="nav-projects">Projets</a></li>
       <li><a href="#" onclick="showPage('vision');   return false;" id="nav-vision">Vision</a></li>
     </ul>
-    <a class="nav-cta" href="#" onclick="showPage('vision'); return false;">Démarrer →</a>
+    <a class="nav-cta" href="#" onclick="goToContact(); return false;">Démarrer →</a>
   </nav>
 
 
@@ -656,7 +656,7 @@
           Peu importe votre secteur ou votre process. On conçoit, on code, on déploie l'application IA qui l'automatise entièrement. Sur mesure, construit avec vous, opérationnel en moins d'une semaine.
         </p>
         <div class="hero-ctas reveal reveal-d3">
-          <a class="btn-gold" href="#" onclick="showPage('vision'); return false;">Décrivez votre process →</a>
+          <a class="btn-gold" href="#" onclick="goToContact(); return false;">Décrivez votre process →</a>
           <a class="btn-outline" href="#" onclick="showPage('projects'); return false;">Voir des exemples concrets</a>
         </div>
       </div>
@@ -822,7 +822,7 @@
           Décrivez-le en quelques lignes. On vous répond sous 24h avec une première analyse et une estimation concrète, sans engagement.
         </p>
         <div class="reveal reveal-d3" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a class="btn-gold" href="#" onclick="showPage('vision'); return false;">Décrivez votre situation →</a>
+          <a class="btn-gold" href="#" onclick="goToContact(); return false;">Décrivez votre situation →</a>
           <a class="btn-outline" href="#" onclick="showPage('projects'); return false;">Voir des exemples</a>
         </div>
       </div>
@@ -835,7 +835,7 @@
           <div class="footer-links">
             <a href="#" onclick="showPage('services'); return false;">Services</a>
             <a href="#" onclick="showPage('projects'); return false;">Projets</a>
-            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+            <a href="#" onclick="goToContact(); return false;">Contact</a>
           </div>
         </div>
       </div>
@@ -1022,7 +1022,7 @@
           <div class="footer-links">
             <a href="#" onclick="showPage('home');     return false;">Accueil</a>
             <a href="#" onclick="showPage('projects'); return false;">Projets</a>
-            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+            <a href="#" onclick="goToContact(); return false;">Contact</a>
           </div>
         </div>
       </div>
@@ -1142,7 +1142,7 @@
         <h2 class="display-lg reveal reveal-d1" style="max-width: 600px; margin: 0 auto 40px;">
           Décrivez-nous ce qui vous<br><em class="text-gold text-italic">prend le plus de temps.</em>
         </h2>
-        <a class="btn-gold reveal reveal-d2" href="#" onclick="showPage('vision'); return false;">On construit votre app →</a>
+        <a class="btn-gold reveal reveal-d2" href="#" onclick="goToContact(); return false;">On construit votre app →</a>
       </div>
     </section>
 
@@ -1153,7 +1153,7 @@
           <div class="footer-links">
             <a href="#" onclick="showPage('home');     return false;">Accueil</a>
             <a href="#" onclick="showPage('services'); return false;">Services</a>
-            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+            <a href="#" onclick="goToContact(); return false;">Contact</a>
           </div>
         </div>
       </div>
@@ -1339,6 +1339,14 @@
       if (nav) nav.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'instant' });
       setTimeout(initReveals, 60);
+    };
+
+    window.goToContact = function() {
+      showPage('vision');
+      setTimeout(function() {
+        const el = document.getElementById('contact-form');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
     };
 
     // ── Nav scroll ────────────────────────────────────────────
