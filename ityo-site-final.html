@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITYO — Vos opérations tournent. Même sans vous.</title>
+  <meta name="description" content="ITYO — Agence d'automation IA. Automatisations sur mesure via N8N pour PME, TPE et startups françaises.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      background: #1B1B26;
+      color: #F8F5EE;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ===== CURSOR ===== */
+    #cursor-dot {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: #C9A84C;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s, border .2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(201,168,76,.55);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width .3s, height .3s;
+    }
+    body.cursor-hover #cursor-dot {
+      width: 6px; height: 6px;
+      background: transparent;
+      border: 1.5px solid #C9A84C;
+    }
+    body.cursor-hover #cursor-ring { width: 56px; height: 56px; }
+
+    /* ===== BG PATHS ===== */
+    #bg-paths {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    #bg-paths svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* ===== FILM GRAIN ===== */
+    #grain {
+      position: fixed; inset: 0;
+      z-index: 1; pointer-events: none; opacity: .025;
+    }
+
+    /* ===== LAYOUT ===== */
+    .page { display: none; position: relative; z-index: 2; min-height: 100vh; }
+    .page.active { display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+    section { padding: 100px 0; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; padding: 22px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: backdrop-filter .4s, border-color .4s, padding .4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(27,27,38,.75);
+      border-color: rgba(201,168,76,.14);
+      padding: 14px 60px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; text-decoration: none;
+    }
+    .nav-logo span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400;
+      color: #F8F5EE; letter-spacing: 5px; text-transform: uppercase;
+    }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 10px; font-weight: 400;
+      color: rgba(248,245,238,.45); text-decoration: none;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      transition: color .3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #C9A84C; }
+    .nav-cta {
+      position: relative; overflow: hidden;
+      padding: 10px 24px;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #C9A84C; border: 1px solid rgba(201,168,76,.4);
+      background: transparent; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: color .4s;
+    }
+    .nav-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: #C9A84C;
+      transform: translateX(-100%); transition: transform .4s ease; z-index: -1;
+    }
+    .nav-cta:hover::before { transform: translateX(0); }
+    .nav-cta:hover { color: #1B1B26; }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+    .reveal-d4 { transition-delay: .4s; }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+    .display-xl {
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 1.05; letter-spacing: -1px;
+    }
+    .display-lg {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.1; letter-spacing: -.5px;
+    }
+    .display-md {
+      font-size: clamp(26px, 3.5vw, 44px);
+      line-height: 1.15;
+    }
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: #C9A84C;
+    }
+    .text-gold { color: #C9A84C; }
+    .text-italic { font-style: italic; }
+
+    /* ===== BUTTONS ===== */
+    .btn-gold {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: #1B1B26; background: #C9A84C;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background .3s;
+    }
+    .btn-gold::after {
+      content: '';
+      position: absolute; top: -50%; left: -60%;
+      width: 40%; height: 200%;
+      background: rgba(255,255,255,.18);
+      transform: skewX(-20deg);
+      transition: left .5s ease;
+    }
+    .btn-gold:hover::after { left: 120%; }
+    .btn-gold:hover { background: #E8C96A; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 35px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(248,245,238,.75); background: transparent;
+      border: 1px solid rgba(201,168,76,.3);
+      cursor: pointer; text-decoration: none;
+      transition: color .3s, border-color .3s;
+    }
+    .btn-outline:hover { color: #C9A84C; border-color: rgba(201,168,76,.6); }
+
+    /* ===== HOME — HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 140px 0 80px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px 6px 8px;
+      border: 1px solid rgba(201,168,76,.2);
+      background: rgba(201,168,76,.05);
+      margin-bottom: 32px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #C9A84C;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .3; }
+    }
+    .hero-badge span {
+      font-size: 10px; font-weight: 400;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.55);
+    }
+    .hero h1 { margin-bottom: 24px; }
+    .hero-sub {
+      font-size: 16px; color: rgba(248,245,238,.55);
+      line-height: 1.75; max-width: 480px; margin-bottom: 48px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* ===== MARQUEE ===== */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(201,168,76,.08);
+      border-bottom: 1px solid rgba(201,168,76,.08);
+      padding: 14px 0;
+      background: rgba(201,168,76,.025);
+    }
+    .marquee-track {
+      display: flex; gap: 64px;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 10px; font-weight: 400;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(248,245,238,.35); flex-shrink: 0;
+    }
+    .marquee-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #C9A84C; opacity: .5;
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border: 1px solid rgba(201,168,76,.14);
+      background: rgba(35,35,47,.5);
+    }
+    .stat-item {
+      padding: 32px 40px;
+      border-right: 1px solid rgba(201,168,76,.14);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300;
+      color: #C9A84C; line-height: 1; margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 10px; font-weight: 400;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.35);
+    }
+
+    /* ===== VISION QUOTE ===== */
+    .vision-quote { max-width: 840px; margin: 0 auto; text-align: center; }
+    .vision-quote blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 4vw, 50px);
+      font-weight: 300; font-style: italic;
+      line-height: 1.35; color: #F8F5EE;
+    }
+    .vision-quote cite {
+      display: block; margin-top: 24px;
+      font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: #C9A84C; font-style: normal;
+    }
+
+    /* ===== SERVICES GRID ===== */
+    .svc-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(201,168,76,.08);
+      border: 1px solid rgba(201,168,76,.08);
+    }
+    .svc {
+      position: relative; padding: 40px 36px;
+      background: #1B1B26; overflow: hidden;
+      transition: background .3s;
+    }
+    .svc::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: #C9A84C;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .svc::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(201,168,76,.06) 0%, transparent 60%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .svc:hover { background: #23232F; }
+    .svc:hover::before { transform: scaleX(1); }
+    .svc:hover::after { opacity: 1; }
+    .svc-num {
+      font-size: 10px; letter-spacing: 2px;
+      color: rgba(201,168,76,.35); margin-bottom: 20px;
+    }
+    .svc h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400;
+      color: #F8F5EE; margin-bottom: 12px;
+    }
+    .svc p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; }
+
+    /* ===== URGENCY ===== */
+    .urgency-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .urgency-card {
+      padding: 40px 32px;
+      border: 1px solid rgba(201,168,76,.14);
+      background: rgba(35,35,47,.35);
+    }
+    .urgency-icon { font-size: 26px; margin-bottom: 20px; }
+    .urgency-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400;
+      margin-bottom: 12px; color: #F8F5EE;
+    }
+    .urgency-card p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; }
+
+    /* ===== CTA FINAL ===== */
+    .cta-section {
+      padding: 120px 0; text-align: center;
+      border-top: 1px solid rgba(201,168,76,.08);
+    }
+
+    /* ===== PAGE HERO ===== */
+    .page-hero {
+      padding: 160px 0 80px;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+
+    /* ===== SERVICES DETAIL ===== */
+    .svc-detail {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(201,168,76,.07);
+    }
+    .svc-detail:last-of-type { border-bottom: none; }
+    .svc-detail.reverse .svc-detail-content { order: 2; }
+    .svc-detail.reverse .svc-detail-visual  { order: 1; }
+    .svc-tag {
+      display: inline-block;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #C9A84C; border: 1px solid rgba(201,168,76,.3);
+      padding: 5px 12px; margin-bottom: 24px;
+    }
+    .svc-detail-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3.5vw, 42px); font-weight: 300;
+      margin-bottom: 20px; color: #F8F5EE;
+    }
+    .svc-detail-content p {
+      font-size: 14px; color: rgba(248,245,238,.6);
+      line-height: 1.85; margin-bottom: 32px;
+    }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 13px; color: rgba(248,245,238,.65); line-height: 1.6;
+    }
+    .feature-list li::before {
+      content: '→'; color: #C9A84C; flex-shrink: 0; margin-top: 1px;
+    }
+    .svc-detail-visual {
+      background: #23232F;
+      border: 1px solid rgba(201,168,76,.14);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 320px; padding: 40px;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline { position: relative; padding: 60px 0; }
+    .timeline-line {
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 1px; background: rgba(201,168,76,.18);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: grid; grid-template-columns: 1fr 60px 1fr;
+      gap: 20px; align-items: center; margin-bottom: 60px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-content-left { text-align: right; }
+    .timeline-node {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,168,76,.4);
+      background: #1B1B26;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; color: #C9A84C; justify-self: center;
+    }
+    .timeline-step {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: #C9A84C; margin-bottom: 8px;
+    }
+    .timeline-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400; color: #F8F5EE; margin-bottom: 8px;
+    }
+    .timeline-desc {
+      font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75;
+    }
+
+    /* ===== PROJECTS ===== */
+    .projects-hero { padding: 160px 0 80px; border-bottom: 1px solid rgba(201,168,76,.1); }
+    .projects-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(90px, 15vw, 180px); font-weight: 300;
+      color: rgba(201,168,76,.12); line-height: 1; letter-spacing: -8px;
+    }
+    .proj-cards {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(201,168,76,.08);
+      margin-bottom: 80px;
+    }
+    .proj-card {
+      background: #1B1B26; padding: 40px 32px;
+      cursor: pointer; transition: background .3s;
+    }
+    .proj-card:hover { background: #23232F; }
+    .proj-card:hover .proj-card-title { color: #C9A84C; }
+    .proj-card:hover .proj-card-arrow { transform: translateX(6px); }
+    .proj-card-tag {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(201,168,76,.55); margin-bottom: 20px;
+    }
+    .proj-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 300;
+      color: #F8F5EE; margin-bottom: 16px;
+      transition: color .3s; line-height: 1.25;
+    }
+    .proj-card-desc {
+      font-size: 13px; color: rgba(248,245,238,.5);
+      line-height: 1.75; margin-bottom: 24px;
+    }
+    .proj-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .proj-card-result { font-size: 11px; color: #C9A84C; font-weight: 500; }
+    .proj-card-arrow {
+      font-size: 18px; color: rgba(201,168,76,.45);
+      transition: transform .3s;
+    }
+    .proj-list-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(248,245,238,.25); margin-bottom: 32px;
+    }
+    .proj-rows { display: flex; flex-direction: column; }
+    .proj-row {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(201,168,76,.07);
+      cursor: pointer; transition: padding-left .3s;
+      position: relative;
+    }
+    .proj-row::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 2px;
+      background: #C9A84C;
+      transform: scaleY(0); transition: transform .3s;
+    }
+    .proj-row:hover { padding-left: 16px; }
+    .proj-row:hover::before { transform: scaleY(1); }
+    .proj-row-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 300;
+      color: rgba(248,245,238,.65); transition: color .3s;
+    }
+    .proj-row:hover .proj-row-name { color: #F8F5EE; }
+    .proj-row-sector {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.22);
+    }
+
+    /* ===== VISION PAGE ===== */
+    .vision-hero { padding: 160px 0 80px; border-bottom: 1px solid rgba(201,168,76,.1); }
+    .manifesto {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .manifesto-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 38px);
+      font-style: italic; font-weight: 300; line-height: 1.45;
+      color: #C9A84C; position: sticky; top: 120px;
+    }
+    .manifesto-text p {
+      font-size: 15px; color: rgba(248,245,238,.6);
+      line-height: 1.9; margin-bottom: 24px;
+    }
+    .stats-sector {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(201,168,76,.1);
+      border: 1px solid rgba(201,168,76,.1); margin: 60px 0;
+    }
+    .stats-sector-item { background: #1B1B26; padding: 48px 40px; text-align: center; }
+    .stats-sector-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px; font-weight: 300;
+      color: #C9A84C; line-height: 1; margin-bottom: 12px;
+    }
+    .stats-sector-label { font-size: 12px; color: rgba(248,245,238,.5); line-height: 1.65; }
+    .stats-sector-source {
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.22); margin-top: 8px;
+    }
+    .future-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(201,168,76,.07);
+    }
+    .future-card {
+      background: #1B1B26; padding: 48px 36px;
+      position: relative; overflow: hidden;
+    }
+    .future-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: #C9A84C;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .future-card:hover::after { transform: scaleX(1); }
+    .future-horizon {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(201,168,76,.55); margin-bottom: 16px;
+    }
+    .future-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400; color: #F8F5EE; margin-bottom: 16px;
+    }
+    .future-card p { font-size: 13px; color: rgba(248,245,238,.5); line-height: 1.75; }
+
+    /* ===== CONTACT ===== */
+    .contact-section { padding: 100px 0; border-top: 1px solid rgba(201,168,76,.1); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3.5vw, 44px); font-weight: 300;
+      margin-bottom: 20px; color: #F8F5EE;
+    }
+    .contact-info p { font-size: 14px; color: rgba(248,245,238,.5); line-height: 1.85; margin-bottom: 32px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px; font-size: 13px; color: rgba(248,245,238,.55);
+    }
+    .contact-detail .ci { color: #C9A84C; font-size: 15px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 9px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(248,245,238,.35); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; background: rgba(35,35,47,.9);
+      border: 1px solid rgba(201,168,76,.14);
+      color: #F8F5EE; padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 300;
+      outline: none; transition: border-color .3s; appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: rgba(201,168,76,.5); }
+    .form-group textarea { resize: vertical; min-height: 140px; }
+    .form-group select option { background: #23232F; }
+    .form-status { margin-top: 12px; font-size: 12px; display: none; }
+    .form-status.success { color: #6aad6a; display: block; }
+    .form-status.error   { color: #E05555; display: block; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(201,168,76,.08);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy { font-size: 11px; color: rgba(248,245,238,.22); letter-spacing: 1px; }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-links a {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.22); text-decoration: none; transition: color .3s;
+    }
+    .footer-links a:hover { color: #C9A84C; }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- BG PATHS -->
+  <div id="bg-paths"></div>
+
+  <!-- FILM GRAIN -->
+  <canvas id="grain"></canvas>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#" onclick="showPage('home'); return false;">
+      <svg width="26" height="26" viewBox="0 0 42 42" fill="none">
+        <circle cx="21" cy="21" r="5" fill="#C9A84C"/>
+        <circle cx="7"  cy="10" r="3.5" fill="#C9A84C" opacity=".8"/>
+        <circle cx="35" cy="10" r="3.5" fill="#C9A84C" opacity=".8"/>
+        <circle cx="7"  cy="32" r="3.5" fill="#C9A84C" opacity=".4"/>
+        <circle cx="35" cy="32" r="3.5" fill="#C9A84C" opacity=".4"/>
+        <line x1="9.8"  y1="11.9" x2="17.5" y2="18"   stroke="#C9A84C" stroke-width="1.2" opacity=".6"/>
+        <line x1="32.2" y1="11.9" x2="24.5" y2="18"   stroke="#C9A84C" stroke-width="1.2" opacity=".6"/>
+        <line x1="9.8"  y1="30.1" x2="17.5" y2="24"   stroke="#C9A84C" stroke-width="1.2" opacity=".3"/>
+        <line x1="32.2" y1="30.1" x2="24.5" y2="24"   stroke="#C9A84C" stroke-width="1.2" opacity=".3"/>
+      </svg>
+      <span>ITYO</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home');     return false;" id="nav-home"     class="active">Accueil</a></li>
+      <li><a href="#" onclick="showPage('services'); return false;" id="nav-services">Services</a></li>
+      <li><a href="#" onclick="showPage('projects'); return false;" id="nav-projects">Projets</a></li>
+      <li><a href="#" onclick="showPage('vision');   return false;" id="nav-vision">Vision</a></li>
+    </ul>
+    <a class="nav-cta" href="#" onclick="showPage('vision'); return false;">Discutons →</a>
+  </nav>
+
+
+  <!-- ========================================================
+       PAGE — HOME
+  ======================================================== -->
+  <div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge reveal">
+          <div class="hero-badge-dot"></div>
+          <span>Agence d'automation IA — Paris</span>
+        </div>
+        <h1 class="display-xl reveal reveal-d1">
+          Vos opérations tournent.<br>
+          <em class="text-gold text-italic">Même sans vous.</em>
+        </h1>
+        <p class="hero-sub reveal reveal-d2">
+          ITYO conçoit et déploie des automatisations sur mesure pour libérer vos équipes des tâches répétitives — et vous redonner du temps sur ce qui compte vraiment.
+        </p>
+        <div class="hero-ctas reveal reveal-d3">
+          <a class="btn-gold" href="#" onclick="showPage('vision'); return false;">Démarrer un projet →</a>
+          <a class="btn-outline" href="#" onclick="showPage('services'); return false;">Voir nos services</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marquee-track"></div>
+    </div>
+
+    <!-- STATS -->
+    <section style="padding: 80px 0;">
+      <div class="container">
+        <div class="stats-bar reveal">
+          <div class="stat-item">
+            <div class="stat-number" id="stat-count">0+</div>
+            <div class="stat-label">Projets livrés</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Sur mesure</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">48h</div>
+            <div class="stat-label">Premier prototype</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">N8N</div>
+            <div class="stat-label">Stack d'automation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISION QUOTE -->
+    <section style="padding: 100px 0; border-top: 1px solid rgba(201,168,76,.07);">
+      <div class="container">
+        <div class="vision-quote">
+          <p class="eyebrow reveal" style="margin-bottom: 32px;">Notre conviction</p>
+          <blockquote class="reveal reveal-d1">
+            "Les entreprises qui automatisent aujourd'hui dictent les règles de demain. Celles qui attendent paient la note après-demain."
+          </blockquote>
+          <cite class="reveal reveal-d2">— ITYO</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES OVERVIEW -->
+    <section style="padding: 0 0 100px;">
+      <div class="container">
+        <div style="margin-bottom: 48px;">
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Ce que nous construisons</p>
+          <h2 class="display-md reveal reveal-d1">Six leviers d'automatisation</h2>
+        </div>
+        <div class="svc-grid reveal">
+          <div class="svc">
+            <div class="svc-num">01</div>
+            <h3>Agents IA sur mesure</h3>
+            <p>Des agents intelligents qui répondent, trient, escaladent — 24h/24, sans fatigue, sans erreur.</p>
+          </div>
+          <div class="svc">
+            <div class="svc-num">02</div>
+            <h3>Automatisation documentaire</h3>
+            <p>Devis, factures, contrats générés et envoyés automatiquement dès qu'un événement se produit.</p>
+          </div>
+          <div class="svc">
+            <div class="svc-num">03</div>
+            <h3>Reporting temps réel</h3>
+            <p>Dashboards vivants qui agrègent vos données ERP, CRM et e-commerce sans intervention manuelle.</p>
+          </div>
+          <div class="svc">
+            <div class="svc-num">04</div>
+            <h3>Intégrations CRM / ERP</h3>
+            <p>Vos outils se parlent enfin : aucune double saisie, aucune donnée perdue entre les silos.</p>
+          </div>
+          <div class="svc">
+            <div class="svc-num">05</div>
+            <h3>Workflows N8N</h3>
+            <p>Orchestre n'importe quel flux métier : du formulaire de contact à la mise à jour comptable.</p>
+          </div>
+          <div class="svc">
+            <div class="svc-num">06</div>
+            <h3>Audit & conseil</h3>
+            <p>Cartographie de vos processus, identification des gains rapides, roadmap d'automatisation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- URGENCY -->
+    <section style="padding: 80px 0 100px; background: rgba(35,35,47,.25);">
+      <div class="container">
+        <div style="margin-bottom: 48px;">
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Pourquoi c'est urgent</p>
+          <h2 class="display-md reveal reveal-d1">Chaque jour sans automation<br><em class="text-italic" style="color: rgba(248,245,238,.5);">est un retard qui se cumule</em></h2>
+        </div>
+        <div class="urgency-grid">
+          <div class="urgency-card reveal">
+            <div class="urgency-icon">⏱</div>
+            <h3>28% du temps perdu</h3>
+            <p>C'est la part des heures productives que vos équipes passent sur des tâches répétitives selon McKinsey. Chaque semaine. Sans exception.</p>
+          </div>
+          <div class="urgency-card reveal reveal-d1">
+            <div class="urgency-icon">⚡</div>
+            <h3>Vos concurrents s'équipent</h3>
+            <p>73% des PME françaises n'ont pas encore automatisé leurs processus clés. Les 27% qui l'ont fait répondent plus vite, à moindre coût.</p>
+          </div>
+          <div class="urgency-card reveal reveal-d2">
+            <div class="urgency-icon">🎯</div>
+            <h3>ROI mesurable dès J+30</h3>
+            <p>Nos clients constatent un retour sur investissement en moins d'un mois : moins d'erreurs, moins de relances, plus de temps facturable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-section">
+      <div class="container">
+        <p class="eyebrow reveal" style="margin-bottom: 24px;">Prêt à passer à l'action ?</p>
+        <h2 class="display-lg reveal reveal-d1" style="max-width: 640px; margin: 0 auto 40px;">
+          Construisons votre premier <em class="text-gold text-italic">agent en 48h</em>
+        </h2>
+        <div class="reveal reveal-d2" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a class="btn-gold" href="#" onclick="showPage('vision'); return false;">Démarrer maintenant →</a>
+          <a class="btn-outline" href="#" onclick="showPage('projects'); return false;">Voir les projets</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-copy">© 2025 ITYO — Tous droits réservés</p>
+          <div class="footer-links">
+            <a href="#" onclick="showPage('services'); return false;">Services</a>
+            <a href="#" onclick="showPage('projects'); return false;">Projets</a>
+            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ========================================================
+       PAGE — SERVICES
+  ======================================================== -->
+  <div id="page-services" class="page">
+
+    <div class="page-hero">
+      <div class="container">
+        <p class="eyebrow reveal" style="margin-bottom: 20px;">Nos services</p>
+        <h1 class="display-xl reveal reveal-d1">Des automatisations<br><em class="text-gold text-italic">taillées pour vous</em></h1>
+        <p class="reveal reveal-d2" style="font-size: 15px; color: rgba(248,245,238,.5); max-width: 500px; line-height: 1.85; margin-top: 24px;">
+          Nous intervenons sur trois grandes familles de processus. Chaque mission démarre par un audit — parce qu'automatiser le mauvais workflow ne sert à rien.
+        </p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container">
+
+        <!-- SERVICE 1 -->
+        <div class="svc-detail reveal">
+          <div class="svc-detail-content">
+            <span class="svc-tag">01 — Intelligence artificielle</span>
+            <h2>Agents IA & Assistants conversationnels</h2>
+            <p>
+              Déployez des agents qui accueillent vos clients, répondent à leurs questions, gèrent les rendez-vous et escaladent uniquement ce qui exige une intervention humaine. Disponibles 24h/24, multicanaux, intégrés à vos outils existants.
+            </p>
+            <ul class="feature-list">
+              <li>Réception intelligente — répond, qualifie, oriente</li>
+              <li>Gestion des RDV et relances automatiques</li>
+              <li>Synthèse automatique des conversations</li>
+              <li>Intégration Telegram, WhatsApp, email, webchat</li>
+            </ul>
+          </div>
+          <div class="svc-detail-visual">
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+              <circle cx="100" cy="100" r="22" fill="rgba(201,168,76,.1)" stroke="#C9A84C" stroke-width="1"/>
+              <circle cx="100" cy="100" r="8"  fill="#C9A84C"/>
+              <circle cx="100" cy="36"  r="10" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.4)" stroke-width="1"/>
+              <circle cx="162" cy="76"  r="8"  fill="rgba(201,168,76,.07)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+              <circle cx="152" cy="156" r="12" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.35)" stroke-width="1"/>
+              <circle cx="48"  cy="156" r="8"  fill="rgba(201,168,76,.07)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+              <circle cx="38"  cy="76"  r="10" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.4)" stroke-width="1"/>
+              <line x1="100" y1="78"  x2="100" y2="46"  stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="118" y1="90"  x2="154" y2="78"  stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="114" y1="116" x2="144" y2="148" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="86"  y1="116" x2="56"  y2="148" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="82"  y1="90"  x2="46"  y2="78"  stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <text x="100" y="22"  text-anchor="middle" fill="rgba(248,245,238,.35)" font-size="8" font-family="DM Sans">CLIENT</text>
+              <text x="174" y="80"  text-anchor="start"  fill="rgba(248,245,238,.35)" font-size="8" font-family="DM Sans">RDV</text>
+              <text x="152" y="175" text-anchor="middle" fill="rgba(248,245,238,.35)" font-size="8" font-family="DM Sans">EMAIL</text>
+              <text x="48"  y="175" text-anchor="middle" fill="rgba(248,245,238,.35)" font-size="8" font-family="DM Sans">SMS</text>
+              <text x="8"   y="80"  text-anchor="start"  fill="rgba(248,245,238,.35)" font-size="8" font-family="DM Sans">TG</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- SERVICE 2 -->
+        <div class="svc-detail reverse reveal">
+          <div class="svc-detail-visual">
+            <svg width="200" height="180" viewBox="0 0 200 180" fill="none">
+              <rect x="52" y="28"  width="110" height="140" rx="2" fill="rgba(35,35,47,.8)"  stroke="rgba(201,168,76,.18)" stroke-width="1"/>
+              <rect x="46" y="22"  width="110" height="140" rx="2" fill="rgba(35,35,47,.6)"  stroke="rgba(201,168,76,.12)" stroke-width="1"/>
+              <rect x="40" y="16"  width="110" height="140" rx="2" fill="rgba(43,43,57,.85)" stroke="rgba(201,168,76,.28)" stroke-width="1"/>
+              <line x1="56" y1="44"  x2="134" y2="44"  stroke="rgba(201,168,76,.4)"  stroke-width="1"/>
+              <line x1="56" y1="58"  x2="122" y2="58"  stroke="rgba(248,245,238,.08)" stroke-width="1"/>
+              <line x1="56" y1="70"  x2="128" y2="70"  stroke="rgba(248,245,238,.08)" stroke-width="1"/>
+              <line x1="56" y1="82"  x2="112" y2="82"  stroke="rgba(248,245,238,.08)" stroke-width="1"/>
+              <rect x="56" y="98"  width="90"  height="28" rx="1" fill="rgba(201,168,76,.07)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+              <text x="101" y="117" text-anchor="middle" fill="#C9A84C" font-size="12" font-family="Cormorant Garamond" font-style="italic">1 250,00 €</text>
+              <circle cx="134" cy="143" r="12" fill="rgba(201,168,76,.08)" stroke="#C9A84C" stroke-width="1"/>
+              <path d="M128 143 L132 147 L140 139" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="svc-detail-content">
+            <span class="svc-tag">02 — Documents</span>
+            <h2>Automatisation documentaire</h2>
+            <p>
+              Fini les devis et factures créés à la main. Dès qu'un formulaire est rempli ou qu'une commande arrive, le document se génère, se formate et part au bon destinataire — sans que personne n'y touche.
+            </p>
+            <ul class="feature-list">
+              <li>Génération PDF automatique (devis, factures, contrats)</li>
+              <li>Envoi par email déclenché par vos événements métier</li>
+              <li>Archivage structuré dans votre drive ou base de données</li>
+              <li>Relances de paiement automatisées</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SERVICE 3 -->
+        <div class="svc-detail reveal">
+          <div class="svc-detail-content">
+            <span class="svc-tag">03 — Data & reporting</span>
+            <h2>Dashboards & Reporting temps réel</h2>
+            <p>
+              Vos chiffres vivent dans 5 outils différents et personne n'a la vraie photo. Nous connectons vos sources (Shopify, banque, CRM, Google Sheets…) et construisons un dashboard unique qui se met à jour tout seul.
+            </p>
+            <ul class="feature-list">
+              <li>Consolidation multi-sources en temps réel</li>
+              <li>KPIs personnalisés selon votre métier</li>
+              <li>Alertes automatiques sur anomalies</li>
+              <li>Rapports hebdomadaires envoyés sans intervention</li>
+            </ul>
+          </div>
+          <div class="svc-detail-visual">
+            <svg width="220" height="180" viewBox="0 0 220 180" fill="none">
+              <rect x="10" y="10" width="200" height="160" rx="2" fill="rgba(27,27,38,.9)" stroke="rgba(201,168,76,.14)" stroke-width="1"/>
+              <line x1="32" y1="40"  x2="200" y2="40"  stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+              <line x1="32" y1="70"  x2="200" y2="70"  stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+              <line x1="32" y1="100" x2="200" y2="100" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+              <line x1="32" y1="130" x2="200" y2="130" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+              <rect x="45"  y="92"  width="20" height="38" fill="rgba(201,168,76,.28)"/>
+              <rect x="80"  y="62"  width="20" height="68" fill="rgba(201,168,76,.45)"/>
+              <rect x="115" y="76"  width="20" height="54" fill="rgba(201,168,76,.38)"/>
+              <rect x="150" y="42"  width="20" height="88" fill="#C9A84C" opacity=".75"/>
+              <polyline points="45,100 80,74 115,84 150,54 185,68" fill="none" stroke="rgba(248,245,238,.25)" stroke-width="1.5" stroke-dasharray="4,2"/>
+              <circle cx="185" cy="68" r="3" fill="#C9A84C"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- METHODE -->
+    <section style="background: rgba(35,35,47,.2); padding: 100px 0;">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 60px;">
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Notre méthode</p>
+          <h2 class="display-md reveal reveal-d1">De l'audit au déploiement</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-line"></div>
+          <div class="timeline-item reveal">
+            <div class="timeline-content-left">
+              <p class="timeline-step">Étape 01</p>
+              <p class="timeline-title">Audit des processus</p>
+              <p class="timeline-desc">Cartographie de vos flux actuels, identification des points de friction et des automatisations à fort ROI.</p>
+            </div>
+            <div class="timeline-node">01</div>
+            <div></div>
+          </div>
+          <div class="timeline-item reveal reveal-d1">
+            <div></div>
+            <div class="timeline-node">02</div>
+            <div class="timeline-content-right" style="text-align: left;">
+              <p class="timeline-step">Étape 02</p>
+              <p class="timeline-title">Architecture & design</p>
+              <p class="timeline-desc">Conception du workflow, choix des outils, validation du plan avec vous avant de coder une seule ligne.</p>
+            </div>
+          </div>
+          <div class="timeline-item reveal reveal-d2">
+            <div class="timeline-content-left">
+              <p class="timeline-step">Étape 03</p>
+              <p class="timeline-title">Développement</p>
+              <p class="timeline-desc">Construction et tests en environnement isolé. Vous validez chaque étape sur un prototype fonctionnel.</p>
+            </div>
+            <div class="timeline-node">03</div>
+            <div></div>
+          </div>
+          <div class="timeline-item reveal reveal-d3">
+            <div></div>
+            <div class="timeline-node">04</div>
+            <div class="timeline-content-right" style="text-align: left;">
+              <p class="timeline-step">Étape 04</p>
+              <p class="timeline-title">Déploiement & suivi</p>
+              <p class="timeline-desc">Mise en production, formation de votre équipe et monitoring pendant 30 jours pour garantir la stabilité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-copy">© 2025 ITYO — Tous droits réservés</p>
+          <div class="footer-links">
+            <a href="#" onclick="showPage('home');     return false;">Accueil</a>
+            <a href="#" onclick="showPage('projects'); return false;">Projets</a>
+            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ========================================================
+       PAGE — PROJECTS
+  ======================================================== -->
+  <div id="page-projects" class="page">
+
+    <section class="projects-hero">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end;">
+          <div>
+            <div class="projects-count reveal">20+</div>
+          </div>
+          <div>
+            <p class="eyebrow reveal" style="margin-bottom: 20px;">Portfolio</p>
+            <h1 class="display-lg reveal reveal-d1">Des automatisations<br>qui <em class="text-gold text-italic">produisent</em></h1>
+            <p class="reveal reveal-d2" style="font-size: 14px; color: rgba(248,245,238,.5); line-height: 1.85; margin-top: 20px;">
+              Chaque projet est une réponse à un vrai problème opérationnel. Pas de démo. Pas de maquette. Du code en production.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section>
+      <div class="container">
+        <div class="proj-cards reveal">
+
+          <div class="proj-card">
+            <div class="proj-card-tag">Bien-être & beauté</div>
+            <h3 class="proj-card-title">Réceptionniste IA — Salon de massage</h3>
+            <p class="proj-card-desc">
+              Agent conversationnel déployé sur le site du salon. Accueille les visiteurs, présente les soins, collecte les informations client et confirme les rendez-vous — sans intervention humaine.
+            </p>
+            <div class="proj-card-footer">
+              <span class="proj-card-result">↓ Appels entrants réduits de 70%</span>
+              <span class="proj-card-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-card-tag">Gestion & productivité</div>
+            <h3 class="proj-card-title">Assistant Telegram multi-fonctions</h3>
+            <p class="proj-card-desc">
+              Bot Telegram connecté aux comptes email, bancaires et calendriers. En une commande : récupère les factures en attente, synthétise les emails importants, liste les événements de la semaine et les dernières transactions.
+            </p>
+            <div class="proj-card-footer">
+              <span class="proj-card-result">1 message = 4 rapports instantanés</span>
+              <span class="proj-card-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-card-tag">Lifestyle & quotidien</div>
+            <h3 class="proj-card-title">Assistant vocal météo & style</h3>
+            <p class="proj-card-desc">
+              Commande vocale connectée à l'API météo locale. Analyse les conditions du jour et de la semaine, et suggère une tenue adaptée. Zéro friction au réveil, mains libres.
+            </p>
+            <div class="proj-card-footer">
+              <span class="proj-card-result">0 friction au réveil</span>
+              <span class="proj-card-arrow">→</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PROJECTS LIST -->
+        <div class="reveal" style="margin-top: 60px;">
+          <p class="proj-list-title">Autres réalisations</p>
+          <div class="proj-rows">
+            <div class="proj-row">
+              <span class="proj-row-name">Automatisation facturation freelance</span>
+              <span class="proj-row-sector">Finance</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Système d'alertes stocks e-commerce</span>
+              <span class="proj-row-sector">E-commerce</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Pipeline de qualification leads CRM</span>
+              <span class="proj-row-sector">Consulting</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Rapport hebdomadaire automatique</span>
+              <span class="proj-row-sector">SaaS</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Notifications immobilières personnalisées</span>
+              <span class="proj-row-sector">Immobilier</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Synchronisation multi-agendas</span>
+              <span class="proj-row-sector">Productivité</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Relances automatiques impayés</span>
+              <span class="proj-row-sector">Fintech</span>
+            </div>
+            <div class="proj-row">
+              <span class="proj-row-name">Agrégation avis clients multi-plateformes</span>
+              <span class="proj-row-sector">Restauration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <p class="eyebrow reveal" style="margin-bottom: 24px;">Votre projet est le suivant</p>
+        <h2 class="display-lg reveal reveal-d1" style="max-width: 600px; margin: 0 auto 40px;">
+          Qu'est-ce qu'on <em class="text-gold text-italic">automatise</em> pour vous ?
+        </h2>
+        <a class="btn-gold reveal reveal-d2" href="#" onclick="showPage('vision'); return false;">Discutons-en →</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-copy">© 2025 ITYO — Tous droits réservés</p>
+          <div class="footer-links">
+            <a href="#" onclick="showPage('home');     return false;">Accueil</a>
+            <a href="#" onclick="showPage('services'); return false;">Services</a>
+            <a href="#" onclick="showPage('vision');   return false;">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ========================================================
+       PAGE — VISION & CONTACT
+  ======================================================== -->
+  <div id="page-vision" class="page">
+
+    <section class="vision-hero">
+      <div class="container">
+        <p class="eyebrow reveal" style="margin-bottom: 20px;">Notre vision</p>
+        <h1 class="display-xl reveal reveal-d1">L'entreprise autonome<br><em class="text-gold text-italic">c'est maintenant</em></h1>
+      </div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section>
+      <div class="container">
+        <div class="manifesto">
+          <blockquote class="manifesto-quote reveal">
+            "L'automation n'est pas une option de croissance.<br>C'est une condition de survie."
+          </blockquote>
+          <div class="manifesto-text">
+            <p class="reveal">
+              ITYO est né d'un constat simple : les PME et TPE françaises passent une part irrationnelle de leur temps sur des tâches que des machines peuvent faire mieux, plus vite, sans erreur. Pendant ce temps, leurs marges s'érodent et leurs équipes s'épuisent sur du travail sans valeur ajoutée.
+            </p>
+            <p class="reveal reveal-d1">
+              Notre mission n'est pas de vendre des outils. C'est de transformer la façon dont vos opérations fonctionnent — en profondeur, sur mesure, avec un vrai retour sur investissement. Pas de boîte noire, pas de promesses vides.
+            </p>
+            <p class="reveal reveal-d2">
+              Chaque automatisation que nous construisons libère du temps, réduit les erreurs et crée de la prévisibilité dans vos flux. Ce n'est pas de la tech pour la tech — c'est de l'efficacité opérationnelle au service de votre ambition.
+            </p>
+          </div>
+        </div>
+
+        <!-- STATS SECTEUR -->
+        <div class="stats-sector reveal">
+          <div class="stats-sector-item">
+            <div class="stats-sector-num">28%</div>
+            <div class="stats-sector-label">du temps des équipes perdu sur des tâches répétitives</div>
+            <div class="stats-sector-source">McKinsey Global Institute</div>
+          </div>
+          <div class="stats-sector-item">
+            <div class="stats-sector-num">$15T</div>
+            <div class="stats-sector-label">de valeur économique générée par l'IA d'ici 2030</div>
+            <div class="stats-sector-source">McKinsey Global Institute</div>
+          </div>
+          <div class="stats-sector-item">
+            <div class="stats-sector-num">73%</div>
+            <div class="stats-sector-label">des PME n'ont pas encore automatisé leurs processus clés</div>
+            <div class="stats-sector-source">Étude BPI France 2024</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE -->
+    <section style="padding: 0 0 100px;">
+      <div class="container">
+        <div style="margin-bottom: 48px;">
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Les horizons</p>
+          <h2 class="display-md reveal reveal-d1">Où nous allons</h2>
+        </div>
+        <div class="future-grid reveal">
+          <div class="future-card">
+            <p class="future-horizon">Aujourd'hui</p>
+            <h3>Automatiser les tâches</h3>
+            <p>Emails, documents, relances, rapports — on supprime les tâches répétitives qui volent du temps à vos équipes. Le ROI est immédiat et mesurable.</p>
+          </div>
+          <div class="future-card">
+            <p class="future-horizon">2026 — 2027</p>
+            <h3>Orchestrer les agents</h3>
+            <p>Des agents IA autonomes qui collaborent, décident et agissent selon des règles métier complexes. Votre opérationnel tourne même quand personne n'est là.</p>
+          </div>
+          <div class="future-card">
+            <p class="future-horizon">2028 et après</p>
+            <h3>L'entreprise autonome</h3>
+            <p>Une organisation où les processus s'adaptent, s'optimisent et se corrigent seuls. L'humain se concentre sur la stratégie, la relation et l'innovation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-grid">
+
+          <div class="contact-info">
+            <p class="eyebrow reveal" style="margin-bottom: 16px;">Contact</p>
+            <h2 class="reveal reveal-d1">Parlons de votre projet</h2>
+            <p class="reveal reveal-d2">
+              Décrivez-nous votre situation en quelques lignes. On vous répond sous 24h avec une première analyse gratuite de vos opportunités d'automatisation.
+            </p>
+            <div class="reveal reveal-d3">
+              <div class="contact-detail">
+                <span class="ci">✉</span>
+                <span>ITYO94190@gmail.com</span>
+              </div>
+              <div class="contact-detail">
+                <span class="ci">📍</span>
+                <span>Paris, France</span>
+              </div>
+              <div class="contact-detail">
+                <span class="ci">⚡</span>
+                <span>Réponse sous 24h garantie</span>
+              </div>
+            </div>
+          </div>
+
+          <form id="contact-form" class="reveal">
+            <div class="form-group">
+              <label for="f-name">Votre nom</label>
+              <input type="text" id="f-name" placeholder="Prénom Nom" required>
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email</label>
+              <input type="email" id="f-email" placeholder="vous@entreprise.com" required>
+            </div>
+            <div class="form-group">
+              <label for="f-secteur">Secteur d'activité</label>
+              <select id="f-secteur">
+                <option value="">Sélectionnez votre secteur</option>
+                <option>E-commerce</option>
+                <option>Consulting / Services</option>
+                <option>Immobilier</option>
+                <option>Finance / Comptabilité</option>
+                <option>Santé / Bien-être</option>
+                <option>Restauration / Hôtellerie</option>
+                <option>Tech / SaaS</option>
+                <option>Artisan / PME</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-message">Votre besoin</label>
+              <textarea id="f-message" placeholder="Décrivez le processus que vous voulez automatiser, ou le problème que vous cherchez à résoudre…" required></textarea>
+            </div>
+            <button type="submit" class="btn-gold" id="submit-btn" style="width: 100%; justify-content: center;">
+              Envoyer ma demande →
+            </button>
+            <div id="form-status" class="form-status"></div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-copy">© 2025 ITYO — Tous droits réservés</p>
+          <div class="footer-links">
+            <a href="#" onclick="showPage('home');     return false;">Accueil</a>
+            <a href="#" onclick="showPage('services'); return false;">Services</a>
+            <a href="#" onclick="showPage('projects'); return false;">Projets</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ========================================================
+       JAVASCRIPT
+  ======================================================== -->
+  <script>
+  (function() {
+
+    // ── EmailJS init ──────────────────────────────────────────
+    emailjs.init('r8aRG4eA8vmvhsJy2');
+
+    // ── Page routing ─────────────────────────────────────────
+    window.showPage = function(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const nav = document.getElementById('nav-' + name);
+      if (nav) nav.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      setTimeout(initReveals, 60);
+    };
+
+    // ── Custom cursor ─────────────────────────────────────────
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+    });
+
+    (function animateCursor() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    function addHoverTargets() {
+      document.querySelectorAll('a, button, .svc, .proj-card, .proj-row, .future-card').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+    }
+    addHoverTargets();
+
+    // ── Nav scroll ────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── Marquee ───────────────────────────────────────────────
+    const items = [
+      'Agents IA', 'Automatisation N8N', 'Workflows sur mesure',
+      'Reporting temps réel', 'Intégrations CRM', 'Documents automatisés',
+      'Chatbots', 'PME & Startups', 'Paris', 'Made in France',
+    ];
+    const track = document.getElementById('marquee-track');
+    [...items, ...items].forEach(txt => {
+      const span = document.createElement('span');
+      span.className = 'marquee-item';
+      span.innerHTML = txt + '<span class="marquee-dot"></span>';
+      track.appendChild(span);
+    });
+
+    // ── Count-up ──────────────────────────────────────────────
+    let counted = false;
+    function countUp() {
+      if (counted) return;
+      counted = true;
+      const el = document.getElementById('stat-count');
+      if (!el) return;
+      let n = 0;
+      const iv = setInterval(() => {
+        n++;
+        el.textContent = n + '+';
+        if (n >= 20) clearInterval(iv);
+      }, 55);
+    }
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    let revealObs = null;
+    function initReveals() {
+      if (revealObs) revealObs.disconnect();
+      const els = document.querySelectorAll('.page.active .reveal');
+      els.forEach(el => el.classList.remove('visible'));
+      revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('visible');
+          if (e.target.closest('#stat-count') || e.target.id === 'stat-count') countUp();
+          if (e.target.querySelector && e.target.querySelector('#stat-count')) countUp();
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => revealObs.observe(el));
+      // also observe stat-count directly
+      const sc = document.getElementById('stat-count');
+      if (sc) {
+        const scObs = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting) countUp();
+        }, { threshold: 0.1 });
+        scObs.observe(sc);
+      }
+    }
+    initReveals();
+
+    // ── Film grain ────────────────────────────────────────────
+    const canvas = document.getElementById('grain');
+    const ctx = canvas.getContext('2d');
+    function resizeGrain() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resizeGrain();
+    window.addEventListener('resize', resizeGrain);
+    (function grainLoop() {
+      const img = ctx.createImageData(canvas.width, canvas.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255 | 0;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      setTimeout(() => requestAnimationFrame(grainLoop), 80);
+    })();
+
+    // ── Background SVG paths ──────────────────────────────────
+    (function() {
+      const container = document.getElementById('bg-paths');
+
+      function buildLayer(flip) {
+        const ns = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('viewBox', '0 0 696 316');
+        svg.style.cssText = [
+          'position:absolute;inset:0;width:100%;height:100%;',
+          'transform:' + (flip ? 'scale(-1,-1)' : 'none') + ';',
+          'opacity:' + (flip ? '.45' : '.75') + ';',
+        ].join('');
+
+        const paths = [];
+        for (let i = 0; i < 36; i++) {
+          const p = document.createElementNS(ns, 'path');
+          const x0  = -80 + i * 24;
+          const cx1 = x0 + 80  + Math.sin(i * 0.52) * 80;
+          const cy1 = 70  + Math.cos(i * 0.71) * 55;
+          const cx2 = x0 + 190 + Math.cos(i * 0.31) * 95;
+          const cy2 = 200 + Math.sin(i * 0.43) * 75;
+          const x1  = x0 + 340 + Math.sin(i * 0.63) * 55;
+          p.setAttribute('d', `M ${x0} 0 C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x1} 316`);
+          p.setAttribute('stroke', '#C9A84C');
+          p.setAttribute('stroke-width', '0.8');
+          p.setAttribute('fill', 'none');
+          p.style.opacity = (0.04 + Math.random() * 0.07).toFixed(3);
+          const len = 550 + Math.random() * 400;
+          p.setAttribute('stroke-dasharray', len);
+          p.setAttribute('stroke-dashoffset', len);
+          p._len   = len;
+          p._speed = 0.25 + Math.random() * 0.55;
+          p._phase = Math.random() * Math.PI * 2;
+          svg.appendChild(p);
+          paths.push(p);
+        }
+        return { svg, paths };
+      }
+
+      const l1 = buildLayer(false);
+      const l2 = buildLayer(true);
+      container.appendChild(l1.svg);
+      container.appendChild(l2.svg);
+
+      let t = 0;
+      (function animate() {
+        t += 0.004;
+        [...l1.paths, ...l2.paths].forEach(p => {
+          const off = p._len * (0.3 + 0.4 * (0.5 + 0.5 * Math.sin(t * p._speed + p._phase)));
+          p.style.strokeDashoffset = off;
+        });
+        requestAnimationFrame(animate);
+      })();
+    })();
+
+    // ── Contact form ──────────────────────────────────────────
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn    = document.getElementById('submit-btn');
+      const status = document.getElementById('form-status');
+      const name   = document.getElementById('f-name').value.trim();
+      const email  = document.getElementById('f-email').value.trim();
+      const sect   = document.getElementById('f-secteur').value;
+      const msg    = document.getElementById('f-message').value.trim();
+
+      if (!name || !email || !msg) {
+        status.className = 'form-status error';
+        status.textContent = 'Veuillez remplir tous les champs obligatoires.';
+        return;
+      }
+      btn.textContent = 'Envoi en cours…';
+      btn.disabled = true;
+      status.className = 'form-status';
+
+      try {
+        await emailjs.send('service_6e8oaar', 'template_dx6z0ik', {
+          from_name: name,
+          reply_to:  email,
+          secteur:   sect || 'Non précisé',
+          message:   msg,
+        });
+        status.className = 'form-status success';
+        status.textContent = '✓ Message envoyé. Nous vous répondons sous 24h.';
+        this.reset();
+      } catch(err) {
+        status.className = 'form-status error';
+        status.textContent = 'Erreur lors de l\'envoi. Contactez-nous directement : ITYO94190@gmail.com';
+      } finally {
+        btn.textContent = 'Envoyer ma demande →';
+        btn.disabled = false;
+      }
+    });
+
+  })();
+  </script>
+
+</body>
+</html>
