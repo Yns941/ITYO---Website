@@ -19,36 +19,7 @@
       background: #1B1B26;
       color: #F8F5EE;
       overflow-x: hidden;
-      cursor: none;
     }
-
-    /* ===== CURSOR ===== */
-    #cursor-dot {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: #C9A84C;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width .2s, height .2s, background .2s, border .2s;
-    }
-    #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(201,168,76,.55);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width .3s, height .3s;
-    }
-    body.cursor-hover #cursor-dot {
-      width: 6px; height: 6px;
-      background: transparent;
-      border: 1.5px solid #C9A84C;
-    }
-    body.cursor-hover #cursor-ring { width: 56px; height: 56px; }
 
     /* ===== BG PATHS ===== */
     #bg-paths {
@@ -614,10 +585,6 @@
   </style>
 </head>
 <body>
-
-  <!-- CURSOR -->
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
 
   <!-- BG PATHS -->
   <div id="bg-paths"></div>
@@ -1315,33 +1282,6 @@
       setTimeout(initReveals, 60);
     };
 
-    // ── Custom cursor ─────────────────────────────────────────
-    const dot  = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top  = my + 'px';
-    });
-
-    (function animateCursor() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(animateCursor);
-    })();
-
-    function addHoverTargets() {
-      document.querySelectorAll('a, button, .svc, .proj-card, .proj-row, .future-card').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-      });
-    }
-    addHoverTargets();
-
     // ── Nav scroll ────────────────────────────────────────────
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
@@ -1423,37 +1363,79 @@
     // ── Background SVG paths ──────────────────────────────────
     (function() {
       const container = document.getElementById('bg-paths');
+      const ns = 'http://www.w3.org/2000/svg';
+
+      // Shared SVG defs with glow filters
+      function makeDefs() {
+        const defs = document.createElementNS(ns, 'defs');
+        defs.innerHTML = `
+          <filter id="glow-soft" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        `;
+        return defs;
+      }
 
       function buildLayer(flip) {
-        const ns = 'http://www.w3.org/2000/svg';
         const svg = document.createElementNS(ns, 'svg');
-        svg.setAttribute('viewBox', '0 0 696 316');
+        svg.setAttribute('viewBox', '0 0 1440 900');
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
         svg.style.cssText = [
           'position:absolute;inset:0;width:100%;height:100%;',
           'transform:' + (flip ? 'scale(-1,-1)' : 'none') + ';',
-          'opacity:' + (flip ? '.45' : '.75') + ';',
         ].join('');
+        svg.appendChild(makeDefs());
 
         const paths = [];
-        for (let i = 0; i < 36; i++) {
+        const total = 28;
+
+        for (let i = 0; i < total; i++) {
           const p = document.createElementNS(ns, 'path');
-          const x0  = -80 + i * 24;
-          const cx1 = x0 + 80  + Math.sin(i * 0.52) * 80;
-          const cy1 = 70  + Math.cos(i * 0.71) * 55;
-          const cx2 = x0 + 190 + Math.cos(i * 0.31) * 95;
-          const cy2 = 200 + Math.sin(i * 0.43) * 75;
-          const x1  = x0 + 340 + Math.sin(i * 0.63) * 55;
-          p.setAttribute('d', `M ${x0} 0 C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x1} 316`);
-          p.setAttribute('stroke', '#C9A84C');
-          p.setAttribute('stroke-width', '0.8');
+          const isAccent = i % 5 === 0;
+          const isMid    = i % 5 === 2;
+
+          // Wide dramatic curves across the full viewport
+          const x0  = -300 + i * 68;
+          const cx1 = x0 + 250 + Math.sin(i * 0.58) * 350;
+          const cy1 = 50  + Math.cos(i * 0.73) * 280;
+          const cx2 = x0 + 600 + Math.cos(i * 0.37) * 400;
+          const cy2 = 550 + Math.sin(i * 0.49) * 280;
+          const x1  = x0 + 900 + Math.sin(i * 0.65) * 200;
+
+          p.setAttribute('d', `M ${x0} -100 C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x1} 1000`);
           p.setAttribute('fill', 'none');
-          p.style.opacity = (0.04 + Math.random() * 0.07).toFixed(3);
-          const len = 550 + Math.random() * 400;
+          p.setAttribute('stroke', '#C9A84C');
+
+          if (isAccent) {
+            p.setAttribute('stroke-width', (1.8 + Math.random() * 0.8).toFixed(2));
+            p.setAttribute('filter', 'url(#glow-strong)');
+            p.style.opacity = (0.45 + Math.random() * 0.25).toFixed(3);
+          } else if (isMid) {
+            p.setAttribute('stroke-width', (1.0 + Math.random() * 0.6).toFixed(2));
+            p.setAttribute('filter', 'url(#glow-soft)');
+            p.style.opacity = (0.22 + Math.random() * 0.18).toFixed(3);
+          } else {
+            p.setAttribute('stroke-width', (0.5 + Math.random() * 0.5).toFixed(2));
+            p.style.opacity = (0.08 + Math.random() * 0.10).toFixed(3);
+          }
+
+          const len = 2000 + Math.random() * 1500;
           p.setAttribute('stroke-dasharray', len);
-          p.setAttribute('stroke-dashoffset', len);
-          p._len   = len;
-          p._speed = 0.25 + Math.random() * 0.55;
-          p._phase = Math.random() * Math.PI * 2;
+          p.setAttribute('stroke-dashoffset', len * (0.3 + Math.random() * 0.4));
+
+          p._len      = len;
+          p._speed    = 0.6 + Math.random() * 1.4;   // 3× faster than before
+          p._phase    = Math.random() * Math.PI * 2;
+          p._opBase   = parseFloat(p.style.opacity);
+          p._opAmp    = isAccent ? 0.18 : 0.06;
+          p._opSpeed  = 0.4 + Math.random() * 0.8;
+          p._opPhase  = Math.random() * Math.PI * 2;
+
           svg.appendChild(p);
           paths.push(p);
         }
@@ -1467,10 +1449,14 @@
 
       let t = 0;
       (function animate() {
-        t += 0.004;
+        t += 0.009;
         [...l1.paths, ...l2.paths].forEach(p => {
-          const off = p._len * (0.3 + 0.4 * (0.5 + 0.5 * Math.sin(t * p._speed + p._phase)));
+          // Dash draw/erase animation — bigger swing for more movement
+          const off = p._len * (0.15 + 0.7 * (0.5 + 0.5 * Math.sin(t * p._speed + p._phase)));
           p.style.strokeDashoffset = off;
+          // Breathing opacity
+          const op = p._opBase + p._opAmp * Math.sin(t * p._opSpeed + p._opPhase);
+          p.style.opacity = Math.max(0.02, op).toFixed(3);
         });
         requestAnimationFrame(animate);
       })();
