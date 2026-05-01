@@ -699,6 +699,170 @@
     }
     .testi-card:hover .testi-tag { border-color: rgba(248,245,238,.14); }
     .testi-card:hover .testi-tag.highlight { border-color: rgba(201,168,76,.4); }
+
+    /* ===== LAYOUT CLASSES (inline grid replacements) ===== */
+    .split-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: end;
+    }
+    .hiw-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+    }
+    .web-banner {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 48px;
+    }
+    .projects-hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: end;
+    }
+
+    /* ===== NAV BURGER ===== */
+    .nav-burger {
+      display: none; flex-direction: column;
+      gap: 5px; background: none; border: none;
+      cursor: pointer; padding: 6px; z-index: 110;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 1.5px;
+      background: rgba(248,245,238,.75);
+      transition: transform .3s cubic-bezier(0.22,1,0.36,1), opacity .2s;
+      transform-origin: center;
+    }
+    nav.menu-open .nav-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    nav.menu-open .nav-burger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    nav.menu-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ===== RESPONSIVE — TABLET (≤ 900px) ===== */
+    @media (max-width: 900px) {
+      .container { padding: 0 36px; }
+      section { padding: 80px 0; }
+      nav { padding: 18px 36px; }
+      nav.scrolled { padding: 13px 36px; }
+
+      .svc-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+      .testi-grid { grid-template-columns: repeat(2,1fr); }
+      .urgency-grid { grid-template-columns: 1fr 1fr; }
+      .proj-cards { grid-template-columns: repeat(2,1fr); }
+      .future-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-sector { grid-template-columns: repeat(2,1fr); }
+
+      .hiw-grid { grid-template-columns: repeat(2,1fr); }
+      .split-header { gap: 28px; }
+      .projects-hero-inner { gap: 40px; }
+
+      .svc-detail { grid-template-columns: 1fr; gap: 40px; }
+      .svc-detail.reverse .svc-detail-content { order: 1; }
+      .svc-detail.reverse .svc-detail-visual  { order: 2; }
+      .svc-detail-visual { min-height: 220px; }
+
+      .manifesto { grid-template-columns: 1fr; gap: 40px; }
+      .manifesto-quote { position: static; }
+
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .timeline-item { grid-template-columns: 1fr 48px 1fr; gap: 16px; }
+
+      .web-banner { gap: 32px; }
+    }
+
+    /* ===== RESPONSIVE — MOBILE (≤ 640px) ===== */
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      section { padding: 64px 0; }
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+
+      /* Nav — burger menu */
+      .nav-links {
+        display: none;
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(20,20,30,.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 36px; z-index: 105;
+        list-style: none;
+      }
+      nav.menu-open .nav-links { display: flex; }
+      .nav-links a { font-size: 14px; letter-spacing: 3px; }
+      .nav-links li .nav-cta-mobile {
+        margin-top: 8px;
+        display: inline-block;
+        padding: 12px 28px;
+        font-size: 11px; font-weight: 500;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: #1B1B26; background: #C9A84C;
+        text-decoration: none;
+      }
+      .nav-burger { display: flex; }
+      .nav-cta { font-size: 9px; padding: 8px 16px; letter-spacing: 1.5px; }
+
+      /* Grids → 1 col */
+      .svc-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .proj-cards { grid-template-columns: 1fr; }
+      .future-grid { grid-template-columns: 1fr; }
+      .stats-sector { grid-template-columns: 1fr; }
+      .urgency-grid { grid-template-columns: 1fr !important; }
+      .hiw-grid { grid-template-columns: 1fr; }
+
+      /* Stats bar → 2x2 */
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+      .stat-item { padding: 24px 20px; }
+
+      /* Split headers → 1 col */
+      .split-header { grid-template-columns: 1fr; gap: 16px; }
+      .split-header > p { display: none; }
+      .projects-hero-inner { grid-template-columns: 1fr; gap: 20px; }
+
+      /* Web banner → stacked */
+      .web-banner { grid-template-columns: 1fr; gap: 24px; padding: 28px 24px !important; }
+      .web-banner .btn-outline { align-self: flex-start; }
+
+      /* Hero */
+      .hero { padding: 110px 0 64px; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas a { text-align: center; justify-content: center; }
+
+      /* Section paddings inline overrides */
+      .page-hero, .projects-hero, .vision-hero { padding: 110px 0 56px; }
+
+      /* Services detail */
+      .svc-detail { gap: 32px; }
+      .svc-detail-visual { min-height: 180px; padding: 24px; }
+
+      /* Timeline → vertical simple */
+      .timeline-line { display: none; }
+      .timeline-item {
+        grid-template-columns: 1fr;
+        margin-bottom: 40px;
+      }
+      .timeline-item > div:empty { display: none; }
+      .timeline-content-left { text-align: left; }
+      .timeline-node { justify-self: start; }
+
+      /* Projects count */
+      .projects-count { font-size: clamp(70px, 20vw, 120px); letter-spacing: -4px; }
+
+      /* Urgency card first */
+      .urgency-card:first-child { padding: 40px 28px; }
+      .urgency-stat { font-size: 52px; }
+
+      /* Manifesto */
+      .manifesto { grid-template-columns: 1fr; gap: 32px; }
+
+      /* Contact */
+      .contact-grid { gap: 40px; }
+
+      /* Footer */
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+
+      /* CTA section */
+      .cta-section { padding: 80px 0; }
+    }
   </style>
 </head>
 <body>
@@ -723,12 +887,16 @@
       <span>ITYO</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#" onclick="showPage('home');     return false;" id="nav-home"     class="active">Accueil</a></li>
-      <li><a href="#" onclick="showPage('services'); return false;" id="nav-services">Services</a></li>
-      <li><a href="#" onclick="showPage('projects'); return false;" id="nav-projects">Projets</a></li>
-      <li><a href="#" onclick="showPage('vision');   return false;" id="nav-vision">Vision</a></li>
+      <li><a href="#" onclick="showPage('home');     closeMobileNav(); return false;" id="nav-home"     class="active">Accueil</a></li>
+      <li><a href="#" onclick="showPage('services'); closeMobileNav(); return false;" id="nav-services">Services</a></li>
+      <li><a href="#" onclick="showPage('projects'); closeMobileNav(); return false;" id="nav-projects">Projets</a></li>
+      <li><a href="#" onclick="showPage('vision');   closeMobileNav(); return false;" id="nav-vision">Vision</a></li>
+      <li><a href="#" class="nav-cta-mobile" onclick="goToContact(); closeMobileNav(); return false;">Démarrer →</a></li>
     </ul>
     <a class="nav-cta" href="#" onclick="goToContact(); return false;">Démarrer →</a>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
 
@@ -790,7 +958,7 @@
     <!-- HOW IT WORKS -->
     <section style="padding: 80px 0; border-top: 1px solid rgba(201,168,76,.07);">
       <div class="container">
-        <div style="margin-bottom: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end;">
+        <div class="split-header" style="margin-bottom: 52px;">
           <div>
             <p class="eyebrow reveal" style="margin-bottom: 16px;">Comment ça marche</p>
             <h2 class="display-md reveal reveal-d1">De votre problème<br><em class="text-italic text-gold">à votre app</em></h2>
@@ -799,7 +967,7 @@
             Chaque projet part de votre situation réelle. On ne part pas d'une liste de fonctionnalités. On part de votre problème, et on construit la solution avec vous.
           </p>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(201,168,76,.08);">
+        <div class="hiw-grid" style="gap: 1px; background: rgba(201,168,76,.08);">
           <div class="reveal" style="background: #1B1B26; padding: 36px 28px; position: relative;">
             <div style="font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 300; color: rgba(201,168,76,.15); line-height: 1; margin-bottom: 20px;">01</div>
             <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: #F8F5EE; margin-bottom: 10px;">Vous décrivez</h3>
@@ -881,7 +1049,7 @@
         </div>
 
         <!-- WEB CREATION -->
-        <div class="reveal" style="margin-top: 1px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 48px; padding: 36px 40px; background: rgba(201,168,76,.03); border: 1px solid rgba(201,168,76,.12);">
+        <div class="reveal web-banner" style="margin-top: 1px; padding: 36px 40px; background: rgba(201,168,76,.03); border: 1px solid rgba(201,168,76,.12);">
           <div>
             <p style="font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(201,168,76,.55); margin-bottom: 12px;">Et aussi</p>
             <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #F8F5EE; margin-bottom: 10px;">"Je n'ai pas de site, ou le mien date de 2015"</h3>
@@ -921,7 +1089,7 @@
     <!-- TESTIMONIALS -->
     <section style="padding: 100px 0;">
       <div class="container">
-        <div style="margin-bottom: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end;">
+        <div class="split-header" style="margin-bottom: 52px;">
           <div>
             <p class="eyebrow reveal" style="margin-bottom: 16px;">Ils nous font confiance</p>
             <h2 class="display-md reveal reveal-d1">Ce que nos clients<br><em class="text-italic text-gold">disent de nous</em></h2>
@@ -1245,7 +1413,7 @@
 
     <section class="projects-hero">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end;">
+        <div class="projects-hero-inner">
           <div>
             <div class="projects-count reveal">20+</div>
           </div>
@@ -1555,6 +1723,18 @@
         const el = document.getElementById('contact-form');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 120);
+    };
+
+    // ── Mobile nav burger ─────────────────────────────────────
+    const burger = document.getElementById('nav-burger');
+    const navEl  = document.getElementById('nav');
+    burger.addEventListener('click', () => {
+      navEl.classList.toggle('menu-open');
+      document.body.style.overflow = navEl.classList.contains('menu-open') ? 'hidden' : '';
+    });
+    window.closeMobileNav = function() {
+      navEl.classList.remove('menu-open');
+      document.body.style.overflow = '';
     };
 
     // ── Testimonial spotlight (GlowCard pattern) ─────────────
