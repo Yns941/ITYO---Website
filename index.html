@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1709,9 +1708,6 @@
   <script>
   (function() {
 
-    // ── EmailJS init ──────────────────────────────────────────
-    emailjs.init('r8aRG4eA8vmvhsJy2');
-
     // ── Page routing ─────────────────────────────────────────
     window.showPage = function(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1904,18 +1900,28 @@
       status.className = 'form-status';
 
       try {
-        await emailjs.send('service_6e8oaar', 'template_dx6z0ik', {
-          from_name: name,
-          reply_to:  email,
-          secteur:   sect || 'Non précisé',
-          message:   msg,
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_key: '35b35ab9-cf1f-4ccd-8893-f7f19b39062a',
+            name:    name,
+            email:   email,
+            secteur: sect || 'Non précisé',
+            message: msg,
+          })
         });
-        status.className = 'form-status success';
-        status.textContent = '✓ Message envoyé. Nous vous répondons sous 24h.';
-        this.reset();
+        const data = await res.json();
+        if (data.success) {
+          status.className = 'form-status success';
+          status.textContent = '✓ Message envoyé. Nous vous répondons sous 24h.';
+          this.reset();
+        } else {
+          throw new Error(data.message);
+        }
       } catch(err) {
         status.className = 'form-status error';
-        status.textContent = 'Erreur lors de l\'envoi. Contactez-nous directement : ITYO94190@gmail.com';
+        status.textContent = 'Erreur lors de l\'envoi. Contactez-nous directement : ityo94190@gmail.com';
       } finally {
         btn.textContent = 'Envoyer ma demande →';
         btn.disabled = false;
