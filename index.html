@@ -769,17 +769,20 @@
     /* ===== RESPONSIVE — MOBILE (≤ 640px) ===== */
     @media (max-width: 640px) {
       .container { padding: 0 20px; }
-      section { padding: 64px 0; }
+      section { padding: 88px 0; }
       nav { padding: 16px 20px; }
       nav.scrolled { padding: 12px 20px; }
+
+      /* Désactive l'animation lourde — cause freeze sur mobile */
+      #bg-paths { display: none; }
 
       /* Nav — burger menu */
       .nav-links {
         display: none;
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(20,20,30,.97);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        background: rgba(20,20,30,.99);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
         flex-direction: column; align-items: center; justify-content: center;
         gap: 36px; z-index: 105;
         list-style: none;
@@ -809,7 +812,15 @@
 
       /* Stats bar → 2x2 */
       .stats-bar { grid-template-columns: repeat(2,1fr); }
-      .stat-item { padding: 24px 20px; }
+      .stat-item { padding: 32px 20px; }
+
+      /* Cards — plus d'espace intérieur */
+      .svc { padding: 40px 28px; }
+      .testi-card { padding: 40px 28px 32px; }
+      .proj-card { padding: 40px 28px; }
+      .urgency-card { padding: 40px 28px; }
+      .future-card { padding: 40px 28px; }
+      .stats-sector-item { padding: 40px 28px; }
 
       /* Split headers → 1 col */
       .split-header { grid-template-columns: 1fr; gap: 16px; }
@@ -821,11 +832,12 @@
       .web-banner .btn-outline { align-self: flex-start; }
 
       /* Hero */
-      .hero { padding: 110px 0 64px; }
+      .hero { padding: 120px 0 88px; }
       .hero-ctas { flex-direction: column; }
       .hero-ctas a { text-align: center; justify-content: center; }
-      .hero-sub { font-size: 16px; }
+      .hero-sub { font-size: 16px; margin-bottom: 40px; }
       .hero-reassurance { text-align: center; }
+      .hero h1 { margin-bottom: 28px; }
 
       /* Section paddings inline overrides */
       .page-hero, .projects-hero, .vision-hero { padding: 110px 0 56px; }
@@ -865,7 +877,10 @@
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
 
       /* CTA section */
-      .cta-section { padding: 80px 0; }
+      .cta-section { padding: 96px 0; }
+
+      /* Marquee — désactive pause hover (inutile sur mobile) */
+      .marquee-track:hover { animation-play-state: running; }
     }
   </style>
 </head>
@@ -1813,8 +1828,9 @@
     initReveals();
 
 
-    // ── Background SVG paths ──────────────────────────────────
+    // ── Background SVG paths (desktop uniquement) ────────────
     (function() {
+      if (window.matchMedia('(max-width: 640px)').matches) return;
       const container = document.getElementById('bg-paths');
       const ns = 'http://www.w3.org/2000/svg';
 
