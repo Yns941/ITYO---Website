@@ -125,6 +125,40 @@ Variables template : `{{from_name}}`, `{{reply_to}}`, `{{secteur}}`, `{{message}
 - Thomas R., Co-fondateur · SaaS B2B
 - Julien M., Gérant · PME Île-de-France
 
+## Typographie — Échelle de tailles (après refonte police)
+
+| Rôle | Taille |
+|---|---|
+| Labels uppercase / eyebrow (anciens 9px) | 11px |
+| Labels uppercase / nav / badges (anciens 10px) | 12px |
+| Boutons / footer / étoiles (anciens 11px) | 13px |
+| Corps de texte | 16px |
+| Titres | clamp() Cormorant Garamond |
+
+## Mobile (≤ 640px) — spécificités
+
+- `.hero-sub` : 16px (réduit depuis 18px)
+- `.hero-reassurance` : `text-align: center`
+- Inputs formulaire : `font-size: 16px` (évite l'auto-zoom iOS Safari)
+- Nav burger : plein écran overlay, liens à 14px
+
+## Logo — exports disponibles
+
+Dossier `logo-exports/` :
+- `logo-icon.svg` / `logo-full.svg` / `logo-dark-bg.svg` — sources vectorielles
+- `logo-icon-512/256/192/64.png` — icône seule (fond transparent)
+- `logo-full-800/400.png` — icône + wordmark (fond transparent)
+- `logo-dark-800.png` — icône + wordmark (fond #1B1B26)
+- `favicon-32.png` / `favicon-16.png` — à renommer en `.ico` pour Netlify
+
+## Marketing psychology — éléments clés en place
+
+- **Loss aversion** : section "Ce que ça coûte de ne rien faire"
+- **Zero-price effect + regret aversion** : ligne `Analyse offerte · Réponse sous 24h · Sans engagement` dans le hero (classe `.hero-reassurance`)
+- **Jobs to Be Done** : tous les h3 services en voix client ("On perd 2h/jour...")
+- **Urgency** : "Vos concurrents s'équipent maintenant" + stats 73% PME
+- **Social proof** : stats McKinsey, 3 témoignages, résultats chiffrés (70%, 28%)
+
 ## Roadmap
 
 | Phase | Statut | Contenu |
@@ -132,11 +166,13 @@ Variables template : `{{from_name}}`, `{{reply_to}}`, `{{secteur}}`, `{{message}
 | 1 — Structure initiale | ✅ DONE | HTML single file, 4 pages, tous effets visuels, EmailJS, design Obsidian & Or complet |
 | 2 — Marketing rewrite | ✅ DONE | Messaging sur-mesure infini, parcours client, exemples en citations, avant/après projets |
 | 3 — Polish | ✅ DONE | Audit impeccable, suppression cadratins, scroll direct formulaire, témoignages, service web |
+| 4 — Responsive | ✅ DONE | Mobile-first, burger nav, tous les breakpoints, fix iOS auto-zoom |
+| 5 — Typographie & Marketing | ✅ DONE | Refonte complète des tailles de police, ligne réassurance hero, exports logo |
 
 ## Prochaines étapes
 
 1. Remplacer les 3 témoignages placeholders par les vrais avis clients
 2. Nom de domaine — acheter `ityo.io` sur OVH ou Namecheap
 3. Mise en ligne — Netlify drag & drop du HTML (gratuit)
-4. Favicon — exporter le logo SVG en .ico / .png
+4. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (renommer en `.ico`)
 5. EmailJS template — vérifier variables `{{from_name}}` etc. sur dashboard EmailJS
