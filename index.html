@@ -774,32 +774,46 @@
       nav.scrolled { padding: 12px 20px; }
 
 
-      /* Nav — burger menu */
+      /* Nav — drawer latéral */
       .nav-links {
-        display: none;
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: #12121c;
-        flex-direction: column; align-items: center; justify-content: center;
+        position: fixed; top: 0; right: 0; bottom: 0;
+        width: 72vw; max-width: 300px;
+        background: #1B1B26;
+        border-left: 1px solid rgba(201,168,76,.18);
+        flex-direction: column; align-items: flex-start; justify-content: center;
         gap: 0; z-index: 105;
-        list-style: none; padding: 0;
+        list-style: none; padding: 48px 36px;
+        transform: translateX(100%);
+        transition: transform .35s cubic-bezier(0.22,1,0.36,1);
+        display: flex;
       }
-      nav.menu-open .nav-links { display: flex; }
-      .nav-links li { width: 100%; text-align: center; }
+      nav.menu-open .nav-links { transform: translateX(0); }
+      /* Backdrop */
+      nav::after {
+        content: '';
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,.5);
+        z-index: 104;
+        opacity: 0; pointer-events: none;
+        transition: opacity .35s;
+      }
+      nav.menu-open::after { opacity: 1; pointer-events: auto; }
+      .nav-links li { width: 100%; }
       .nav-links a {
         display: block;
-        padding: 22px 0;
-        font-size: 22px; letter-spacing: 4px;
-        color: #F8F5EE;
+        padding: 16px 0;
+        font-size: 13px; letter-spacing: 3px;
+        color: rgba(248,245,238,.75);
         border-bottom: 1px solid rgba(201,168,76,.08);
-        width: 80%; margin: 0 auto;
+        text-transform: uppercase;
       }
       .nav-links a:hover, .nav-links a.active { color: #C9A84C; }
       .nav-links a::after { display: none; }
       .nav-links li .nav-cta-mobile {
         display: inline-block;
-        margin-top: 40px;
-        padding: 18px 48px;
-        font-size: 14px; font-weight: 500;
+        margin-top: 32px;
+        padding: 14px 28px;
+        font-size: 12px; font-weight: 500;
         letter-spacing: 2px; text-transform: uppercase;
         color: #1B1B26; background: #C9A84C;
         text-decoration: none; border: none;
@@ -1759,6 +1773,12 @@
       navEl.classList.remove('menu-open');
       document.body.style.overflow = '';
     };
+    // Ferme le drawer en cliquant sur le backdrop
+    navEl.addEventListener('click', function(e) {
+      if (e.target === navEl || e.target.classList.contains('nav-links') === false && !e.target.closest('.nav-links')) {
+        closeMobileNav();
+      }
+    });
 
     // ── Testimonial spotlight (GlowCard pattern) ─────────────
     document.querySelectorAll('.testi-card').forEach(card => {
