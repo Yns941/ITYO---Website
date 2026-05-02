@@ -140,7 +140,17 @@ Variables template : `{{from_name}}`, `{{reply_to}}`, `{{secteur}}`, `{{message}
 - `.hero-sub` : 16px (réduit depuis 18px)
 - `.hero-reassurance` : `text-align: center`
 - Inputs formulaire : `font-size: 16px` (évite l'auto-zoom iOS Safari)
-- Nav burger : plein écran overlay, liens à 14px
+- Nav burger : **drawer latéral depuis la droite** (72vw, max 300px), fond `#1B1B26`, bordure dorée, backdrop semi-transparent, ferme au tap extérieur
+- Sections : padding 88px (vs 64px avant)
+- Cards (svc, testi, proj, urgency, future) : padding 40px 28px
+- Background SVG : 8 chemins au lieu de 18, mise à jour toutes les 4 frames (évite le freeze)
+- `backdrop-filter` supprimé du menu (performance)
+- Marquee hover-pause désactivé (inutile sur touch)
+
+## Desktop — spécificités
+
+- Nav : un seul CTA "Démarrer →" (bouton doré `nav-cta`), le doublon `nav-cta-mobile` masqué via `:has()`
+- Background SVG : 18 chemins, mise à jour toutes les 2 frames
 
 ## Logo — exports disponibles
 
@@ -168,11 +178,19 @@ Dossier `logo-exports/` :
 | 3 — Polish | ✅ DONE | Audit impeccable, suppression cadratins, scroll direct formulaire, témoignages, service web |
 | 4 — Responsive | ✅ DONE | Mobile-first, burger nav, tous les breakpoints, fix iOS auto-zoom |
 | 5 — Typographie & Marketing | ✅ DONE | Refonte complète des tailles de police, ligne réassurance hero, exports logo |
+| 6 — Mise en ligne | ✅ DONE | Netlify (GitHub auto-deploy), domaine ityo.fr (DNS Hostinger), SSL auto |
+| 7 — Formulaire contact | ✅ DONE | Web3Forms (remplace EmailJS), clé `35b35ab9-cf1f-4ccd-8893-f7f19b39062a` |
+| 8 — Polish mobile | ✅ DONE | Drawer nav latéral, aération sections, optimisation animation, nav desktop nettoyée |
+
+## Déploiement
+
+- **Hébergement** : Netlify (auto-deploy depuis GitHub, branche `main`)
+- **Domaine** : `ityo.fr` — DNS Hostinger : A `@ → 75.2.60.5`, CNAME `www → mellow-arithmetic-1d2e5b.netlify.app`
+- **Formulaire** : Web3Forms, emails reçus sur `ityo94190@gmail.com`
+- **Fichier principal** : `index.html` (renommé depuis `ityo-site-final.html`)
 
 ## Prochaines étapes
 
 1. Remplacer les 3 témoignages placeholders par les vrais avis clients
-2. Nom de domaine — acheter `ityo.io` sur OVH ou Namecheap
-3. Mise en ligne — Netlify drag & drop du HTML (gratuit)
-4. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (renommer en `.ico`)
-5. EmailJS template — vérifier variables `{{from_name}}` etc. sur dashboard EmailJS
+2. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
+3. Vérifier la propagation DNS sur `ityo.fr` si pas encore live
