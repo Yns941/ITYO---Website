@@ -1775,7 +1775,9 @@
     };
     // Ferme le drawer en cliquant sur le backdrop
     navEl.addEventListener('click', function(e) {
-      if (e.target === navEl || e.target.classList.contains('nav-links') === false && !e.target.closest('.nav-links')) {
+      if (navEl.classList.contains('menu-open')
+          && !e.target.closest('.nav-links')
+          && !e.target.closest('#nav-burger')) {
         closeMobileNav();
       }
     });
