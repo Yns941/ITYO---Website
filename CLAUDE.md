@@ -184,6 +184,7 @@ Dossier `logo-exports/` :
 | 8 — Polish mobile | ✅ DONE | Drawer nav latéral, aération sections, optimisation animation, nav desktop nettoyée |
 | 9 — Email & fix mobile | ✅ DONE | ImprovMX forwarding contact@ityo.fr, fix drawer menu scrollé (backdrop-filter désactivé mobile) |
 | 10 — Carousel témoignages | ✅ DONE | Fan stack vanilla JS : éventail desktop, swipe 1 carte mobile, fond crème #F4F3F1, bordure or, hauteur dynamique |
+| 11 — Audit UX marketing | ✅ DONE | Section différenciation (ITYO vs freelance vs agence), FAQ accordion 5 questions (prix, technique, délai, maintenance, garantie), inversion urgency↔témoignages, témoignages enrichis (taille entreprise), sticky CTA mobile, suppression cadratins |
 
 ## Déploiement
 
@@ -200,6 +201,20 @@ Dossier `logo-exports/` :
 - **Statut** : Forwarding opérationnel et testé ✅
 - **Gmail Send As** : non configuré (2FA non souhaité, ImprovMX SMTP = payant) — les réponses partent depuis ityo94190@gmail.com
 - **Adresse affichée sur le site** : contact@ityo.fr (mis à jour dans index.html)
+
+## Structure page Accueil — ordre des sections (mis à jour)
+
+1. Hero
+2. Marquee
+3. Stats bar
+4. Comment ça marche (4 étapes)
+5. Citation
+6. Services overview (6 exemples + bannière web)
+7. **Différenciation** (ITYO vs Freelance vs Agence) ← nouveau
+8. **Témoignages** (carousel fan stack) ← remonté avant urgency
+9. Urgency (Ce que ça coûte de ne rien faire)
+10. **FAQ accordion** (5 questions) ← nouveau
+11. CTA final
 
 ## Prochaines étapes
 
