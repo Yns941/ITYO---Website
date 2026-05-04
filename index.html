@@ -772,7 +772,7 @@
       .container { padding: 0 20px; }
       section { padding: 88px 0; }
       nav { padding: 16px 20px; }
-      nav.scrolled { padding: 12px 20px; }
+      nav.scrolled { padding: 12px 20px; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
 
       /* Nav — drawer latéral */
@@ -1672,7 +1672,7 @@
             <div class="reveal reveal-d3">
               <div class="contact-detail">
                 <span class="ci">✉</span>
-                <span>ITYO94190@gmail.com</span>
+                <span>contact@ityo.fr</span>
               </div>
               <div class="contact-detail">
                 <span class="ci">📍</span>
@@ -1964,7 +1964,7 @@
         }
       } catch(err) {
         status.className = 'form-status error';
-        status.textContent = 'Erreur lors de l\'envoi. Contactez-nous directement : ityo94190@gmail.com';
+        status.textContent = 'Erreur lors de l\'envoi. Contactez-nous directement : contact@ityo.fr';
       } finally {
         btn.textContent = 'Envoyer ma demande →';
         btn.disabled = false;

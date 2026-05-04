@@ -181,6 +181,7 @@ Dossier `logo-exports/` :
 | 6 — Mise en ligne | ✅ DONE | Netlify (GitHub auto-deploy), domaine ityo.fr (DNS Hostinger), SSL auto |
 | 7 — Formulaire contact | ✅ DONE | Web3Forms (remplace EmailJS), clé `35b35ab9-cf1f-4ccd-8893-f7f19b39062a` |
 | 8 — Polish mobile | ✅ DONE | Drawer nav latéral, aération sections, optimisation animation, nav desktop nettoyée |
+| 9 — Email & fix mobile | ✅ DONE | ImprovMX forwarding contact@ityo.fr, fix drawer menu scrollé (backdrop-filter désactivé mobile) |
 
 ## Déploiement
 
@@ -189,8 +190,16 @@ Dossier `logo-exports/` :
 - **Formulaire** : Web3Forms, emails reçus sur `ityo94190@gmail.com`
 - **Fichier principal** : `index.html` (renommé depuis `ityo-site-final.html`)
 
+## Email professionnel
+
+- **Adresse** : `contact@ityo.fr` → redirige vers `ityo94190@gmail.com`
+- **Service** : ImprovMX (plan gratuit, forwarding uniquement)
+- **DNS Hostinger** : MX 10 `mx1.improvmx.com`, MX 20 `mx2.improvmx.com`, TXT SPF `v=spf1 include:spf.improvmx.com ~all`
+- **Statut** : Forwarding opérationnel et testé ✅
+- **Gmail Send As** : non configuré (2FA non souhaité, ImprovMX SMTP = payant) — les réponses partent depuis ityo94190@gmail.com
+- **Adresse affichée sur le site** : contact@ityo.fr (mis à jour dans index.html)
+
 ## Prochaines étapes
 
 1. Remplacer les 3 témoignages placeholders par les vrais avis clients
 2. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
-3. Vérifier la propagation DNS sur `ityo.fr` si pas encore live
