@@ -870,12 +870,13 @@
       /* Timeline → vertical simple */
       .timeline-line { display: none; }
       .timeline-item {
-        grid-template-columns: 1fr;
+        display: flex; flex-direction: column;
         margin-bottom: 40px;
       }
       .timeline-item > div:empty { display: none; }
+      .timeline-node { order: -1; margin-bottom: 16px; }
       .timeline-content-left { text-align: left; }
-      .timeline-node { justify-self: start; }
+      .timeline-content-right { text-align: left; }
 
       /* Projects count */
       .projects-count { font-size: clamp(70px, 20vw, 120px); letter-spacing: -4px; }
