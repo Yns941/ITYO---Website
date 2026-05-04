@@ -894,8 +894,9 @@
       .svc { padding: 40px 28px; }
       .testi-card { padding: 40px 28px 32px; }
       .testi-carousel { overflow: hidden; }
-      .testi-stage { height: 480px; }
-      .testi-stack-card { width: 85vw; }
+      .testi-stage { min-height: 200px; }
+      .testi-stack-card { width: 88vw; }
+      .testi-stack-card .testi-card { border-radius: 12px; }
       .proj-card { padding: 40px 28px; }
       .urgency-card { padding: 40px 28px; }
       .future-card { padding: 40px 28px; }
@@ -2058,30 +2059,58 @@
 
     function render() {
       const mob  = window.innerWidth <= 640;
-      const cardW = cards[0].offsetWidth || (mob ? window.innerWidth * .85 : 500);
-      const spc  = mob ? cardW * .28 : cardW * .46;
-      const rot  = mob ? 13 : 19;
+      const cardW = cards[0].offsetWidth || (mob ? window.innerWidth * .88 : 500);
+      const spc  = cardW * .46;
+      const rot  = 19;
+
       cards.forEach((card, i) => {
         const off = signedOff(i, active);
         const abs = Math.abs(off);
-        if (abs > 1) {
-          card.style.opacity = '0';
-          card.style.pointerEvents = 'none';
-          card.style.zIndex = '0';
-          card.style.transform = `translateX(-50%) translateX(${off * spc * 1.6}px) rotateZ(${off * rot * 1.5}deg) scale(0.68)`;
-        } else if (off === 0) {
-          card.style.transform = 'translateX(-50%) translateY(-18px) scale(1.03)';
-          card.style.opacity = '1';
-          card.style.zIndex = '10';
-          card.style.pointerEvents = 'auto';
+
+        if (mob) {
+          // Mobile : une seule carte visible, glissement horizontal sans rotation
+          if (off === 0) {
+            card.style.transform = 'translateX(-50%)';
+            card.style.opacity = '1';
+            card.style.zIndex = '10';
+            card.style.pointerEvents = 'auto';
+          } else {
+            const s = off > 0 ? 1 : -1;
+            card.style.transform = `translateX(-50%) translateX(${s * 110}%)`;
+            card.style.opacity = '0';
+            card.style.zIndex = '0';
+            card.style.pointerEvents = 'none';
+          }
         } else {
-          const s = off > 0 ? 1 : -1;
-          card.style.transform = `translateX(-50%) translateX(${s * spc}px) translateY(14px) rotateZ(${s * rot}deg) scale(0.87)`;
-          card.style.opacity = '1';
-          card.style.zIndex = '5';
-          card.style.pointerEvents = 'auto';
+          // Desktop : fan éventail
+          if (abs > 1) {
+            card.style.opacity = '0';
+            card.style.pointerEvents = 'none';
+            card.style.zIndex = '0';
+            card.style.transform = `translateX(-50%) translateX(${off * spc * 1.6}px) rotateZ(${off * rot * 1.5}deg) scale(0.68)`;
+          } else if (off === 0) {
+            card.style.transform = 'translateX(-50%) translateY(-18px) scale(1.03)';
+            card.style.opacity = '1';
+            card.style.zIndex = '10';
+            card.style.pointerEvents = 'auto';
+          } else {
+            const s = off > 0 ? 1 : -1;
+            card.style.transform = `translateX(-50%) translateX(${s * spc}px) translateY(14px) rotateZ(${s * rot}deg) scale(0.87)`;
+            card.style.opacity = '1';
+            card.style.zIndex = '5';
+            card.style.pointerEvents = 'auto';
+          }
         }
       });
+
+      // Hauteur dynamique sur mobile
+      if (mob) {
+        const activeCard = cards[active];
+        if (activeCard) stage.style.height = activeCard.offsetHeight + 'px';
+      } else {
+        stage.style.height = '';
+      }
+
       dots.forEach((d, i) => d.classList.toggle('active', i === active));
     }
 
