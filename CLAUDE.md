@@ -74,10 +74,11 @@ Variables template : `{{from_name}}`, `{{reply_to}}`, `{{secteur}}`, `{{message}
 2. **Curseur** — curseur système natif (le curseur custom a été supprimé à la demande de Yannis)
 3. **Scroll reveal** — IntersectionObserver, classes `reveal` + `reveal-d1/d2/d3/d4`
 4. **Count-up** — compteur "20+" déclenché au scroll
-5. **Nav scroll** — `backdrop-filter: blur(24px)` après 50px
+5. **Nav scroll** — `backdrop-filter: blur(24px)` après 50px (désactivé sur mobile pour éviter bug position:fixed du drawer)
 6. **Marquee** — double piste CSS, 22s linear infinite, pausé au hover
 7. **Hover cards** — barre top `scaleX 0→1`, glow radial, arrow translate
 8. **`prefers-reduced-motion`** — transitions réduites, marquee stoppé, badge dot stoppé
+9. **Testimonials carousel** — fan stack vanilla JS : éventail 3 cartes desktop (rotateZ ±19°, scale), swipe 1 carte mobile, drag souris, auto-advance 4.2s, dots or. Cartes fond `#F4F3F1`, bordure or, border-radius 16px.
 
 ## Navigation & routing
 
@@ -182,6 +183,7 @@ Dossier `logo-exports/` :
 | 7 — Formulaire contact | ✅ DONE | Web3Forms (remplace EmailJS), clé `35b35ab9-cf1f-4ccd-8893-f7f19b39062a` |
 | 8 — Polish mobile | ✅ DONE | Drawer nav latéral, aération sections, optimisation animation, nav desktop nettoyée |
 | 9 — Email & fix mobile | ✅ DONE | ImprovMX forwarding contact@ityo.fr, fix drawer menu scrollé (backdrop-filter désactivé mobile) |
+| 10 — Carousel témoignages | ✅ DONE | Fan stack vanilla JS : éventail desktop, swipe 1 carte mobile, fond crème #F4F3F1, bordure or, hauteur dynamique |
 
 ## Déploiement
 
