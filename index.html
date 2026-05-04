@@ -340,6 +340,65 @@
       border-top: 1px solid rgba(201,168,76,.08);
     }
 
+    /* ===== DIFFÉRENCIATION ===== */
+    .diff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(201,168,76,.08); }
+    .diff-col { background: #1B1B26; padding: 40px 32px; }
+    .diff-col.diff-highlight { background: rgba(201,168,76,.04); }
+    .diff-col-label {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(248,245,238,.28); margin-bottom: 18px;
+    }
+    .diff-col.diff-highlight .diff-col-label { color: #C9A84C; }
+    .diff-col-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400;
+      color: #F8F5EE; margin-bottom: 28px;
+    }
+    .diff-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .diff-list li {
+      font-size: 15px; color: rgba(248,245,238,.42); line-height: 1.55;
+      padding-left: 22px; position: relative;
+    }
+    .diff-list li::before { content: '·'; position: absolute; left: 0; color: rgba(201,168,76,.35); }
+    .diff-col.diff-highlight .diff-list li { color: rgba(248,245,238,.72); }
+    .diff-col.diff-highlight .diff-list li::before { content: '✓'; color: #C9A84C; font-size: 11px; top: 2px; }
+
+    /* ===== FAQ ===== */
+    .faq-list { display: flex; flex-direction: column; gap: 1px; background: rgba(201,168,76,.08); }
+    .faq-item { background: #1B1B26; }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 32px; cursor: pointer; gap: 20px;
+      font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400;
+      color: #F8F5EE; transition: color .3s; border: none; background: none; width: 100%; text-align: left;
+    }
+    .faq-question:hover { color: #C9A84C; }
+    .faq-arrow {
+      font-size: 22px; color: #C9A84C; flex-shrink: 0; line-height: 1;
+      transition: transform .38s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .42s cubic-bezier(0.22,1,0.36,1); }
+    .faq-answer-inner { padding: 0 32px 28px; font-size: 15px; color: rgba(248,245,238,.52); line-height: 1.85; }
+    .faq-item.open .faq-answer { max-height: 400px; }
+
+    /* ===== STICKY CTA MOBILE ===== */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed; bottom: 24px; right: 20px; z-index: 300;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .3s cubic-bezier(0.22,1,0.36,1), transform .3s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none;
+    }
+    .mobile-sticky-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .mobile-sticky-cta a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 14px 22px; border-radius: 40px;
+      background: #C9A84C; color: #1B1B26;
+      font-size: 13px; font-weight: 500; letter-spacing: .5px;
+      text-decoration: none; white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(201,168,76,.35);
+    }
+
     /* ===== PAGE HERO ===== */
     .page-hero {
       padding: 160px 0 80px;
@@ -901,6 +960,11 @@
       .urgency-card { padding: 40px 28px; }
       .future-card { padding: 40px 28px; }
       .stats-sector-item { padding: 40px 28px; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .diff-col { padding: 36px 24px; }
+      .faq-question { padding: 22px 24px; font-size: 17px; }
+      .faq-answer-inner { padding: 0 24px 22px; }
+      .mobile-sticky-cta { display: block; }
 
       /* Split headers → 1 col */
       .split-header { grid-template-columns: 1fr; gap: 16px; }
@@ -1162,33 +1226,53 @@
       </div>
     </section>
 
-    <!-- URGENCY -->
-    <section style="padding: 80px 0 100px; background: rgba(35,35,47,.25);">
+    <!-- DIFFÉRENCIATION -->
+    <section style="padding: 80px 0 100px; border-top: 1px solid rgba(201,168,76,.07);">
       <div class="container">
         <div style="margin-bottom: 48px;">
-          <p class="eyebrow reveal" style="margin-bottom: 16px;">Ce que ça coûte de ne rien faire</p>
-          <h2 class="display-md reveal reveal-d1">Chaque semaine sans app IA<br><em class="text-italic" style="color: rgba(248,245,238,.5);">c'est des heures achetées à prix fort</em></h2>
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Pourquoi ITYO</p>
+          <h2 class="display-md reveal reveal-d1">Pas un freelance.<br><em class="text-italic text-gold">Pas une agence.</em></h2>
         </div>
-        <div class="urgency-grid">
-          <div class="urgency-card reveal">
-            <div class="urgency-stat">28%</div>
-            <h3>Des heures productives perdues</h3>
-            <p>C'est la part du temps de vos équipes passée sur des tâches répétitives : facturation, réponses clients, relances, rapports. Chaque semaine, sans exception. Source : McKinsey.</p>
+        <div class="diff-grid reveal reveal-d2">
+          <div class="diff-col">
+            <p class="diff-col-label">Freelance</p>
+            <p class="diff-col-title">Compétent, mais seul</p>
+            <ul class="diff-list">
+              <li>Délai imprévisible selon sa charge</li>
+              <li>Pas de méthode structurée</li>
+              <li>Disparu après livraison</li>
+              <li>Dépend d'une seule personne</li>
+              <li>Pas de suivi post-lancement</li>
+            </ul>
           </div>
-          <div class="urgency-card reveal reveal-d1">
-            <h3>Vos concurrents s'équipent maintenant</h3>
-            <p>73% des PME françaises n'ont pas encore automatisé leurs processus clés. Les 27% qui l'ont fait traitent plus de dossiers, répondent plus vite, à coût identique.</p>
+          <div class="diff-col diff-highlight">
+            <p class="diff-col-label">ITYO</p>
+            <p class="diff-col-title">Sur mesure, livré vite</p>
+            <ul class="diff-list">
+              <li>Prototype en 48h, livraison J+5 garantie</li>
+              <li>Méthode en 4 étapes, validée à chaque phase</li>
+              <li>Monitoring 30 jours inclus post-livraison</li>
+              <li>App conçue pour votre process exact</li>
+              <li>Prix accessible, ROI mesurable dès J+30</li>
+            </ul>
           </div>
-          <div class="urgency-card reveal reveal-d2">
-            <h3>Résultat visible dès J+30</h3>
-            <p>Nos clients mesurent le gain le premier mois : heures récupérées, erreurs éliminées, réponses clients accélérées. L'app tourne, vous n'y pensez plus.</p>
+          <div class="diff-col">
+            <p class="diff-col-label">Agence classique</p>
+            <p class="diff-col-title">Solide, mais lent</p>
+            <ul class="diff-list">
+              <li>Devis en 2 semaines, livraison en 3 mois</li>
+              <li>Budget ×3 à ×5 pour le même résultat</li>
+              <li>Nombreuses réunions avant la moindre ligne de code</li>
+              <li>Rigidité des specs initiales</li>
+              <li>Peu adapté aux PME et TPE</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
     <!-- TESTIMONIALS -->
-    <section style="padding: 100px 0;">
+    <section style="padding: 100px 0; background: rgba(35,35,47,.15);">
       <div class="container">
         <div class="split-header" style="margin-bottom: 52px;">
           <div>
@@ -1214,7 +1298,7 @@
                 </div>
                 <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
                 <p class="testi-name">Marie D.</p>
-                <p class="testi-role">Directrice associée · Conseil & stratégie</p>
+                <p class="testi-role">Directrice associée · Conseil & stratégie · 8 salariés</p>
               </div>
             </div>
 
@@ -1229,7 +1313,7 @@
                 </div>
                 <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
                 <p class="testi-name">Thomas R.</p>
-                <p class="testi-role">Co-fondateur · SaaS B2B</p>
+                <p class="testi-role">Co-fondateur · SaaS B2B · 15 salariés</p>
               </div>
             </div>
 
@@ -1244,7 +1328,7 @@
                 </div>
                 <div class="testi-divider" style="margin-top: 24px; margin-bottom: 20px;"></div>
                 <p class="testi-name">Julien M.</p>
-                <p class="testi-role">Gérant · PME Île-de-France</p>
+                <p class="testi-role">Gérant · PME · 6 salariés · Île-de-France</p>
               </div>
             </div>
 
@@ -1257,6 +1341,93 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- URGENCY -->
+    <section style="padding: 80px 0 100px; background: rgba(35,35,47,.25);">
+      <div class="container">
+        <div style="margin-bottom: 48px;">
+          <p class="eyebrow reveal" style="margin-bottom: 16px;">Ce que ça coûte de ne rien faire</p>
+          <h2 class="display-md reveal reveal-d1">Chaque semaine sans app IA<br><em class="text-italic" style="color: rgba(248,245,238,.5);">c'est des heures achetées à prix fort</em></h2>
+        </div>
+        <div class="urgency-grid">
+          <div class="urgency-card reveal">
+            <div class="urgency-stat">28%</div>
+            <h3>Des heures productives perdues</h3>
+            <p>C'est la part du temps de vos équipes passée sur des tâches répétitives : facturation, réponses clients, relances, rapports. Chaque semaine, sans exception. Source : McKinsey.</p>
+          </div>
+          <div class="urgency-card reveal reveal-d1">
+            <h3>Vos concurrents s'équipent maintenant</h3>
+            <p>73% des PME françaises n'ont pas encore automatisé leurs processus clés. Les 27% qui l'ont fait traitent plus de dossiers, répondent plus vite, à coût identique.</p>
+          </div>
+          <div class="urgency-card reveal reveal-d2">
+            <h3>Résultat visible dès J+30</h3>
+            <p>Nos clients mesurent le gain le premier mois : heures récupérées, erreurs éliminées, réponses clients accélérées. L'app tourne, vous n'y pensez plus.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="padding: 100px 0; border-top: 1px solid rgba(201,168,76,.07);">
+      <div class="container">
+        <div class="split-header" style="margin-bottom: 52px;">
+          <div>
+            <p class="eyebrow reveal" style="margin-bottom: 16px;">Questions fréquentes</p>
+            <h2 class="display-md reveal reveal-d1">Tout ce que vous<br><em class="text-italic text-gold">voulez savoir</em></h2>
+          </div>
+          <p class="reveal reveal-d2" style="font-size: 15px; color: rgba(248,245,238,.4); line-height: 1.85; max-width: 40ch;">
+            Les vraies questions que nos clients posent avant de se lancer.
+          </p>
+        </div>
+        <div class="faq-list reveal reveal-d3">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Quel est le budget typique d'un projet ?</span>
+              <span class="faq-arrow">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">Nos projets démarrent à partir de quelques centaines d'euros pour les automatisations simples. Une app sur mesure complète se situe généralement entre 1 500 et 4 000€ selon la complexité. On vous donne un chiffrage précis lors du premier échange — sans engagement, en moins de 24h.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Je ne suis pas technique du tout. Est-ce que ça pose problème ?</span>
+              <span class="faq-arrow">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">Non. Vous décrivez votre problème en termes business, on traduit en technique. La grande majorité de nos clients ne savent pas coder. Votre seul rôle : nous expliquer votre process, valider les étapes et tester l'app sur vos vraies données.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Qui s'occupe de la maintenance après la livraison ?</span>
+              <span class="faq-arrow">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">L'app est livrée avec une période de monitoring de 30 jours incluse. Passé ce délai, on reste disponibles pour des évolutions ou ajustements. La plupart de nos apps tournent en autonomie complète sans intervention régulière de votre part.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Et si le résultat ne correspond pas à ce que j'imaginais ?</span>
+              <span class="faq-arrow">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">C'est impossible par construction : on valide chaque étape avec vous avant de passer à la suivante. Vous voyez un prototype fonctionnel à J+2, vous le testez sur vos vraies données avant la mise en production. Pas de livraison surprise.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>En combien de temps mon app sera prête ?</span>
+              <span class="faq-arrow">+</span>
+            </button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">Premier prototype en 48h, version production livrée en 5 jours ouvrés. C'est une garantie, pas une estimation. Si votre projet est complexe, on le découpe en étapes de 5 jours pour que vous voyiez du concret rapidement.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1276,6 +1447,11 @@
         </div>
       </div>
     </section>
+
+    <!-- STICKY CTA MOBILE -->
+    <div class="mobile-sticky-cta" id="mobile-sticky-cta">
+      <a href="#" onclick="goToContact(); return false;">Démarrer →</a>
+    </div>
 
     <footer>
       <div class="container">
@@ -2039,6 +2215,36 @@
         btn.disabled = false;
       }
     });
+
+  // ===== FAQ ACCORDION =====
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ===== STICKY CTA MOBILE =====
+  (function() {
+    const el = document.getElementById('mobile-sticky-cta');
+    if (!el) return;
+    let visible = false;
+    window.addEventListener('scroll', () => {
+      const show = window.scrollY > 400;
+      if (show !== visible) {
+        visible = show;
+        el.classList.toggle('visible', visible);
+      }
+    }, { passive: true });
+  })();
 
   // ===== TESTIMONIALS CAROUSEL =====
   (function() {
