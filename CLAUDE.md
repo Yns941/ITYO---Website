@@ -185,6 +185,24 @@ Dossier `logo-exports/` :
 | 9 — Email & fix mobile | ✅ DONE | ImprovMX forwarding contact@ityo.fr, fix drawer menu scrollé (backdrop-filter désactivé mobile) |
 | 10 — Carousel témoignages | ✅ DONE | Fan stack vanilla JS : éventail desktop, swipe 1 carte mobile, fond crème #F4F3F1, bordure or, hauteur dynamique |
 | 11 — Audit UX marketing | ✅ DONE | Section différenciation (ITYO vs freelance vs agence), FAQ accordion 5 questions (prix, technique, délai, maintenance, garantie), inversion urgency↔témoignages, témoignages enrichis (taille entreprise), sticky CTA mobile, suppression cadratins |
+| 12 — Crédibilité copy | ✅ DONE | Audit copy complet : suppression triplets verbaux IA, jargon tech (en prod, architecture, specs, ROI), reformulation "5 jours" → "première version testable en moins d'une semaine" partout (6 occurrences) |
+| 13 — Facteur humain | 🔜 NEXT | Section fondateur (photo Yannis + parcours + pourquoi ITYO) — besoin photo |
+| 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage : workflow complet, outils, temps de dev, captures, citation — besoin données de Yannis |
+| 15 — Vidéo Remotion | 🔜 TODO | Animation app facturation : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion |
+| 16 — Stack technique | 🔜 FIN | Logos technos (OpenAI, n8n, Supabase…) — décision reportée en fin de projet |
+
+## Audit expert externe (mai 2026)
+
+Points forts identifiés : direction artistique premium (8.5/10), ton maîtrisé, compréhension marché réel, exemples métier.
+
+Points à corriger (plan 13→16) :
+- **Trop abstrait** : visiteur comprend "IA / automatisation / sur-mesure" mais pas QUI exactement, POURQUOI eux, COMMENT, COMBIEN
+- **Pas de preuve concrète** : manque captures, workflows, démos, cas réels détaillés
+- **Pas de facteur humain** : aucun visage, aucun parcours → crédibilité conversion faible
+- **Trop généraliste** : "on peut tout faire" réduit la valeur perçue — solution : spécialisation affichée TPE/PME + "sur mesure ensuite"
+- **Scores** : Crédibilité business 6.5/10 · Clarté offre 6/10 · Crédibilité technique perçue 5.5/10
+
+Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de projet.
 
 ## Déploiement
 
