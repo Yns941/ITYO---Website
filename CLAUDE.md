@@ -187,8 +187,8 @@ Dossier `logo-exports/` :
 | 11 — Audit UX marketing | ✅ DONE | Section différenciation (ITYO vs freelance vs agence), FAQ accordion 5 questions (prix, technique, délai, maintenance, garantie), inversion urgency↔témoignages, témoignages enrichis (taille entreprise), sticky CTA mobile, suppression cadratins |
 | 12 — Crédibilité copy | ✅ DONE | Audit copy complet : suppression triplets verbaux IA, jargon tech (en prod, architecture, specs, ROI), reformulation "5 jours" → "première version testable en moins d'une semaine" partout (6 occurrences) |
 | 13 — Facteur humain | 🔜 NEXT | Section fondateur (photo Yannis + parcours + pourquoi ITYO) — besoin photo |
-| 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage : workflow complet, outils, temps de dev, captures, citation — besoin données de Yannis |
-| 15 — Vidéo Remotion | 🔜 TODO | Animation app facturation : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion |
+| 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage (N8N) : workflow complet, captures nœuds, chiffres réels, citation client. Les deux preuves côte à côte sur page Projets : Remotion (démo) + N8N (preuve réelle) = double effet conviction |
+| 15 — Vidéo Remotion | 🔜 TODO | App facturation (repo invoice-automation) : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion. Faire EN PREMIER car repo dispo |
 | 16 — Stack technique | 🔜 FIN | Logos technos (OpenAI, n8n, Supabase…) — décision reportée en fin de projet |
 
 ## Audit expert externe (mai 2026)
