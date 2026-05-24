@@ -132,18 +132,50 @@
     .text-gold { color: #C9A84C; }
     .text-italic { font-style: italic; }
 
-    /* ===== STACK TAGS ===== */
-    .stack-tag {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px; font-weight: 400;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(248,245,238,.45);
-      border: 1px solid rgba(201,168,76,.15);
-      border-radius: 3px;
-      padding: 7px 14px;
-      transition: color .3s cubic-bezier(0.22,1,0.36,1), border-color .3s cubic-bezier(0.22,1,0.36,1);
+    /* ===== LOGO CAROUSEL ===== */
+    .logo-carousel-wrap {
+      overflow: hidden; width: 100%; position: relative;
     }
-    .stack-tag:hover { color: #C9A84C; border-color: rgba(201,168,76,.45); }
+    .logo-carousel-wrap::before,
+    .logo-carousel-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+    }
+    .logo-carousel-wrap::before { left: 0; background: linear-gradient(to right, #1B1B26, transparent); }
+    .logo-carousel-wrap::after  { right: 0; background: linear-gradient(to left,  #1B1B26, transparent); }
+    .logo-carousel-track {
+      display: flex; gap: 14px; width: max-content;
+      animation: logoScroll 36s linear infinite;
+    }
+    .logo-carousel-track:hover { animation-play-state: paused; }
+    @keyframes logoScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .logo-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; padding: 18px 22px; min-width: 108px;
+      border: 1px solid rgba(201,168,76,.11); border-radius: 6px;
+      background: transparent; cursor: default; user-select: none;
+      transition: border-color .4s cubic-bezier(0.22,1,0.36,1), background .4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .logo-card:hover { border-color: rgba(201,168,76,.38); background: rgba(201,168,76,.04); }
+    .logo-card img {
+      width: auto; height: 28px; object-fit: contain;
+      filter: brightness(0) invert(1); opacity: .38;
+      transition: opacity .4s cubic-bezier(0.22,1,0.36,1), filter .4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .logo-card:hover img {
+      opacity: .9;
+      filter: brightness(0) invert(1) sepia(.7) saturate(2.8) hue-rotate(2deg) brightness(.92);
+    }
+    .logo-card span {
+      font-family: 'DM Sans', sans-serif; font-size: 10px;
+      letter-spacing: 1.8px; text-transform: uppercase;
+      color: rgba(248,245,238,.26); white-space: nowrap;
+      transition: color .4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .logo-card:hover span { color: rgba(201,168,76,.62); }
+    @media (prefers-reduced-motion: reduce) { .logo-carousel-track { animation: none; } }
 
     /* ===== BUTTONS ===== */
     .btn-gold {
@@ -1242,19 +1274,32 @@
     </section>
 
     <!-- STACK TECHNIQUE -->
-    <section style="padding: 56px 0; border-top: 1px solid rgba(201,168,76,.07);">
-      <div class="container">
-        <p class="eyebrow reveal" style="text-align: center; margin-bottom: 28px;">Nos outils</p>
-        <div class="reveal reveal-d1" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-          <span class="stack-tag">N8N</span>
-          <span class="stack-tag">OpenAI</span>
-          <span class="stack-tag">Claude API</span>
-          <span class="stack-tag">Supabase</span>
-          <span class="stack-tag">Google Workspace</span>
-          <span class="stack-tag">Vercel</span>
-          <span class="stack-tag">React.js</span>
-          <span class="stack-tag">Cursor</span>
-          <span class="stack-tag">GitHub</span>
+    <section style="padding: 64px 0; border-top: 1px solid rgba(201,168,76,.07);">
+      <div class="container" style="margin-bottom: 36px;">
+        <p class="eyebrow reveal" style="text-align: center;">Nos outils</p>
+      </div>
+      <div class="logo-carousel-wrap">
+        <div class="logo-carousel-track">
+          <!-- Set 1 -->
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/n8n" alt="N8N" /><span>N8N</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/openai" alt="OpenAI" /><span>OpenAI</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/anthropic" alt="Claude API" /><span>Claude API</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" /><span>Supabase</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/google" alt="Google Workspace" /><span>Google Workspace</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" /><span>Vercel</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/react" alt="React.js" /><span>React.js</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/cursor" alt="Cursor" /><span>Cursor</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/github" alt="GitHub" /><span>GitHub</span></div>
+          <!-- Set 2 — duplicate pour boucle infinie -->
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/n8n" alt="N8N" /><span>N8N</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/openai" alt="OpenAI" /><span>OpenAI</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/anthropic" alt="Claude API" /><span>Claude API</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" /><span>Supabase</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/google" alt="Google Workspace" /><span>Google Workspace</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" /><span>Vercel</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/react" alt="React.js" /><span>React.js</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/cursor" alt="Cursor" /><span>Cursor</span></div>
+          <div class="logo-card"><img src="https://cdn.simpleicons.org/github" alt="GitHub" /><span>GitHub</span></div>
         </div>
       </div>
     </section>
