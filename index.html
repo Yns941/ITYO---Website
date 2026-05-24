@@ -132,6 +132,19 @@
     .text-gold { color: #C9A84C; }
     .text-italic { font-style: italic; }
 
+    /* ===== STACK TAGS ===== */
+    .stack-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(248,245,238,.45);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 3px;
+      padding: 7px 14px;
+      transition: color .3s cubic-bezier(0.22,1,0.36,1), border-color .3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .stack-tag:hover { color: #C9A84C; border-color: rgba(201,168,76,.45); }
+
     /* ===== BUTTONS ===== */
     .btn-gold {
       position: relative; overflow: hidden;
@@ -1225,6 +1238,24 @@
           <a class="btn-outline" href="#" onclick="goToContact(); return false;" style="flex-shrink: 0; white-space: nowrap;">Parlez-nous de votre projet →</a>
         </div>
 
+      </div>
+    </section>
+
+    <!-- STACK TECHNIQUE -->
+    <section style="padding: 56px 0; border-top: 1px solid rgba(201,168,76,.07);">
+      <div class="container">
+        <p class="eyebrow reveal" style="text-align: center; margin-bottom: 28px;">Nos outils</p>
+        <div class="reveal reveal-d1" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+          <span class="stack-tag">N8N</span>
+          <span class="stack-tag">OpenAI</span>
+          <span class="stack-tag">Claude API</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">Google Workspace</span>
+          <span class="stack-tag">Vercel</span>
+          <span class="stack-tag">React.js</span>
+          <span class="stack-tag">Cursor</span>
+          <span class="stack-tag">GitHub</span>
+        </div>
       </div>
     </section>
 
