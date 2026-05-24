@@ -189,20 +189,62 @@ Dossier `logo-exports/` :
 | 13 — Facteur humain | 🔜 NEXT | Section fondateur (photo Yannis + parcours + pourquoi ITYO) — besoin photo |
 | 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage (N8N) : workflow complet, captures nœuds, chiffres réels, citation client. Les deux preuves côte à côte sur page Projets : Remotion (démo) + N8N (preuve réelle) = double effet conviction |
 | 15 — Vidéo Remotion | 🔜 TODO | App facturation (repo invoice-automation) : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion. Faire EN PREMIER car repo dispo |
-| 16 — Stack technique | 🔜 FIN | Logos technos (OpenAI, n8n, Supabase…) — décision reportée en fin de projet |
+| 16 — Stack technique | 🔜 TODO | N8N · OpenAI · Supabase · Make · Telegram · WhatsApp · Notion · Google Workspace. Section sobre après services, logos ou texte stylisé, cohérent DA |
 
 ## Audit expert externe (mai 2026)
 
 Points forts identifiés : direction artistique premium (8.5/10), ton maîtrisé, compréhension marché réel, exemples métier.
 
-Points à corriger (plan 13→16) :
+Points à corriger :
 - **Trop abstrait** : visiteur comprend "IA / automatisation / sur-mesure" mais pas QUI exactement, POURQUOI eux, COMMENT, COMBIEN
 - **Pas de preuve concrète** : manque captures, workflows, démos, cas réels détaillés
 - **Pas de facteur humain** : aucun visage, aucun parcours → crédibilité conversion faible
-- **Trop généraliste** : "on peut tout faire" réduit la valeur perçue — solution : spécialisation affichée TPE/PME + "sur mesure ensuite"
+- **Trop généraliste** : "on peut tout faire" réduit la valeur perçue
 - **Scores** : Crédibilité business 6.5/10 · Clarté offre 6/10 · Crédibilité technique perçue 5.5/10
 
 Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de projet.
+
+## Méthodologie de travail — Plan d'exécution audit
+
+**Règle absolue** : une modification à la fois. On s'arrête après chaque modif, Yannis valide ("OK" / "validé" / "suivant"), on passe à la suivante. Si "revoir" ou "corriger" : ajustement avant de continuer. Jamais deux fichiers modifiés simultanément sans accord.
+
+**Format de rendu obligatoire pour chaque modif** :
+1. Fichier(s) concerné(s)
+2. Lignes modifiées (avant / après si pertinent)
+3. Résultat attendu en une phrase
+4. "Valides-tu cette modification ?"
+
+### Les 7 modifications — statut
+
+| # | Modification | Statut | Notes |
+|---|---|---|---|
+| 1 | Reformuler promesse "5 jours" | ✅ DONE | Phase 12 — "première version testable en moins d'une semaine" (6 occurrences) |
+| 2 | Section stack techniques | 🔜 TODO | N8N · OpenAI · Supabase · Make · Telegram · WhatsApp · Notion · Google Workspace |
+| 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
+| 4 | Reformuler hero (cible explicite) | 🔜 TODO | Ajouter "Pour les PME, indépendants et startups qui veulent automatiser sans recruter" |
+| 5 | Spécialisation affichée | 🔜 TODO | "Spécialité : automatisation IA pour PME de services." + ligne secondaire sur mesure |
+| 6 | Enrichir études de cas | 🔜 TODO | 4 blocs par projet : Problème · Solution (workflow) · Stack · Résultat |
+| 7 | Section "Comment ça marche" | ⚠️ EXISTE | Version actuelle : 4 étapes (Vous décrivez / On conçoit / Version testable / Ça tourne). Vérifier si reformulation vers Brief / Prototype / Tests / Livraison est souhaitée |
+
+### Contenu préparé pour [6] Études de cas
+
+**Projet 1 — Réceptionniste IA (salon de massage)**
+- Problème : appels manqués hors heures d'ouverture, perte directe de réservations
+- Solution : appel entrant → agent IA vocal → qualification → prise de RDV automatique → notification gérant
+- Stack : N8N · OpenAI · Calendly
+- Résultat : 70% des appels traités automatiquement, 0 réservation perdue hors horaires
+
+**Projet 2 — Bot Telegram multi-fonction**
+- Problème : gestion manuelle factures, mails, agenda chronophage pour indépendant
+- Solution : commande Telegram → parsing IA → action (facture / résumé mail / événement calendar / log bancaire)
+- Stack : N8N · OpenAI · Telegram Bot API · Google Workspace
+- Résultat : 4 tâches administratives automatisées, gain estimé 3h/semaine
+
+**Projet 3 — Bot météo / conseil vestimentaire**
+- Problème : démo technique vitrine pour illustrer capacités automatisation vocale
+- Solution : commande vocale → météo temps réel → suggestion tenue → réponse vocale générée
+- Stack : N8N · OpenAI · Weather API · TTS
+- Résultat : démo fonctionnelle livrée en 48h
 
 ## Déploiement
 
