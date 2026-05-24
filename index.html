@@ -1075,6 +1075,16 @@
       .marquee-track:hover { animation-play-state: running; }
     }
 
+    /* ── Video Lightbox ──────────────────────────────────────── */
+    .cs-lightbox { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0); pointer-events: none; transition: background 0.3s cubic-bezier(0.22,1,0.36,1); }
+    .cs-lightbox.open { background: rgba(0,0,0,0.88); pointer-events: all; }
+    .cs-lightbox-inner { position: relative; width: 100%; max-width: 1000px; transform: scale(0.94) translateY(16px); opacity: 0; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.35s cubic-bezier(0.22,1,0.36,1); }
+    .cs-lightbox.open .cs-lightbox-inner { transform: scale(1) translateY(0); opacity: 1; }
+    .cs-lightbox-inner video { width: 100%; display: block; border-radius: 8px; box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2); }
+    .cs-lightbox-close { position: absolute; top: -44px; right: 0; width: 36px; height: 36px; border: 1px solid rgba(248,245,238,0.3); border-radius: 50%; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .cs-lightbox-close:hover { border-color: #C9A84C; background: rgba(201,168,76,0.1); }
+    .cs-lightbox-close svg { width: 14px; height: 14px; }
+
     /* ── Case Study ──────────────────────────────────────────── */
     .cs-section { padding: 80px 0 0; border-top: 1px solid rgba(201,168,76,0.1); }
     .cs-header { text-align: center; margin-bottom: 64px; }
@@ -2204,22 +2214,26 @@
   <script>
   (function() {
 
-    // ── Case study video ──────────────────────────────────────
+    // ── Case study lightbox ───────────────────────────────────
     window.toggleCsVideo = function() {
-      const video   = document.getElementById('cs-video');
-      const overlay = document.getElementById('cs-play-overlay');
-      if (!video) return;
-      if (video.paused) {
-        video.play();
-        overlay.classList.add('hidden');
-        video.addEventListener('ended', function() {
-          overlay.classList.remove('hidden');
-        }, { once: true });
-      } else {
-        video.pause();
-        overlay.classList.remove('hidden');
-      }
+      const lb    = document.getElementById('cs-lightbox');
+      const video = document.getElementById('cs-lightbox-video');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      video.currentTime = 0;
+      video.play();
     };
+    window.closeCsLightbox = function(e) {
+      if (e && e.target !== document.getElementById('cs-lightbox')) return;
+      const lb    = document.getElementById('cs-lightbox');
+      const video = document.getElementById('cs-lightbox-video');
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      video.pause();
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') window.closeCsLightbox(null);
+    });
 
     // ── Page routing ─────────────────────────────────────────
     window.showPage = function(name) {
@@ -2603,5 +2617,16 @@
   </script>
 
 
+  <!-- Video lightbox -->
+  <div class="cs-lightbox" id="cs-lightbox" onclick="closeCsLightbox(event)">
+    <div class="cs-lightbox-inner">
+      <button class="cs-lightbox-close" onclick="closeCsLightbox(null)">
+        <svg viewBox="0 0 14 14" fill="none" stroke="rgba(248,245,238,0.8)" stroke-width="1.5" stroke-linecap="round">
+          <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+        </svg>
+      </button>
+      <video id="cs-lightbox-video" src="assets/invoice-promo.mp4" controls playsinline></video>
+    </div>
+  </div>
 </body>
 </html>
