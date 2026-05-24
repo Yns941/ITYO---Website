@@ -189,7 +189,7 @@ Dossier `logo-exports/` :
 | 13 — Facteur humain | 🔜 NEXT | Section fondateur (photo Yannis + parcours + pourquoi ITYO) — besoin photo |
 | 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage (N8N) : workflow complet, captures nœuds, chiffres réels, citation client. Les deux preuves côte à côte sur page Projets : Remotion (démo) + N8N (preuve réelle) = double effet conviction |
 | 15 — Vidéo Remotion | 🔜 TODO | App facturation (repo invoice-automation) : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion. Faire EN PREMIER car repo dispo |
-| 16 — Stack technique | 🔜 TODO | N8N · OpenAI · Supabase · Make · Telegram · WhatsApp · Notion · Google Workspace. Section sobre après services, logos ou texte stylisé, cohérent DA |
+| 16 — Stack technique | ✅ DONE | Carousel logo scroll infini vanilla JS : 9 logos via cdn.simpleicons.org, hover gold, fade latéral, pause hover, prefers-reduced-motion. Marquee copie : ton direct, factuel, zéro bullshit |
 
 ## Audit expert externe (mai 2026)
 
@@ -219,7 +219,7 @@ Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de p
 | # | Modification | Statut | Notes |
 |---|---|---|---|
 | 1 | Reformuler promesse "5 jours" | ✅ DONE | Phase 12 — "première version testable en moins d'une semaine" (6 occurrences) |
-| 2 | Section stack techniques | 🔜 TODO | N8N · OpenAI · Supabase · Make · Telegram · WhatsApp · Notion · Google Workspace |
+| 2 | Section stack techniques | ✅ DONE | Carousel logo scroll infini, 9 outils : N8N · OpenAI · Claude API · Supabase · Google Workspace · Vercel · React.js · Cursor · GitHub |
 | 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
 | 4 | Reformuler hero (cible explicite) | 🔜 TODO | Ajouter "Pour les PME, indépendants et startups qui veulent automatiser sans recruter" |
 | 5 | Spécialisation affichée | 🔜 TODO | "Spécialité : automatisation IA pour PME de services." + ligne secondaire sur mesure |
