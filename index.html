@@ -1074,6 +1074,45 @@
       /* Marquee — désactive pause hover (inutile sur mobile) */
       .marquee-track:hover { animation-play-state: running; }
     }
+
+    /* ── Case Study ──────────────────────────────────────────── */
+    .cs-section { padding: 80px 0 0; border-top: 1px solid rgba(201,168,76,0.1); }
+    .cs-header { text-align: center; margin-bottom: 64px; }
+    .cs-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 5vw, 52px); font-weight: 300; color: #F8F5EE; margin: 14px 0 12px; line-height: 1.15; }
+    .cs-header .cs-quote { font-family: 'DM Sans', sans-serif; font-size: 15px; color: rgba(248,245,238,0.50); font-style: italic; }
+
+    .cs-demo { display: flex; gap: 56px; align-items: center; margin-bottom: 0; }
+    .cs-video-wrap { position: relative; flex: 1.1; border-radius: 8px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.15); cursor: pointer; }
+    .cs-video-wrap video { width: 100%; display: block; }
+    .cs-play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.25s cubic-bezier(0.22,1,0.36,1); }
+    .cs-video-wrap:hover .cs-play-overlay { background: rgba(0,0,0,0.15); }
+    .cs-play-overlay.hidden { display: none; }
+    .cs-play-circle { width: 68px; height: 68px; border: 2px solid rgba(255,255,255,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); background: rgba(255,255,255,0.08); transition: transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+    .cs-video-wrap:hover .cs-play-circle { transform: scale(1.07); }
+
+    .cs-demo-text { flex: 1; }
+    .cs-demo-text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 300; color: #F8F5EE; line-height: 1.25; margin-bottom: 20px; }
+    .cs-demo-text p { font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.8; color: rgba(248,245,238,0.68); margin-bottom: 14px; }
+    .cs-result-badge { display: inline-flex; align-items: center; gap: 14px; padding: 12px 20px; border: 1px solid rgba(78,154,98,0.4); border-radius: 4px; background: rgba(78,154,98,0.07); margin: 8px 0 24px; }
+    .cs-result-badge span:first-child { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 2.5px; color: #4E9A62; }
+    .cs-result-badge span:last-child { font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 700; color: #4E9A62; line-height: 1; }
+    .cs-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 28px; }
+    .cs-stack-tag { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 2px; color: rgba(201,168,76,0.65); border: 1px solid rgba(201,168,76,0.2); padding: 4px 12px; border-radius: 2px; }
+
+    .cs-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 64px 0 72px; border-top: 1px solid rgba(201,168,76,0.1); margin-top: 64px; }
+    .cs-feature-icon { width: 44px; height: 44px; padding: 10px; border: 1px solid rgba(201,168,76,0.22); border-radius: 6px; background: rgba(201,168,76,0.05); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .cs-feature-icon svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .cs-feature h4 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #F8F5EE; margin-bottom: 7px; }
+    .cs-feature p { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(248,245,238,0.50); line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .cs-demo { flex-direction: column; gap: 40px; }
+      .cs-features { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    }
+    @media (max-width: 640px) {
+      .cs-section { padding: 60px 0 0; }
+      .cs-features { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -1792,6 +1831,110 @@
       </div>
     </section>
 
+    <!-- ── ÉTUDE DE CAS : App Facturation ──────────────── -->
+    <section class="cs-section">
+      <div class="container">
+
+        <div class="cs-header reveal">
+          <p class="eyebrow">Étude de cas · BTP & Industrie</p>
+          <h2>App facturation <em class="text-gold text-italic">automatique</em></h2>
+          <p class="cs-quote">"Je génère encore mes factures à la main, ça me prend 45 minutes par client."</p>
+        </div>
+
+        <div class="cs-demo reveal reveal-d1">
+
+          <!-- Vidéo -->
+          <div class="cs-video-wrap" onclick="toggleCsVideo()">
+            <video id="cs-video" src="assets/invoice-promo.mp4" preload="metadata" playsinline></video>
+            <div class="cs-play-overlay" id="cs-play-overlay">
+              <div class="cs-play-circle">
+                <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+                  <path d="M1 2.2c0-1.374 1.512-2.213 2.678-1.484l12.11 7.693a1.75 1.75 0 0 1 0 2.969L3.678 19.284C2.512 20.013 1 19.174 1 17.8z" fill="#fff"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Texte -->
+          <div class="cs-demo-text">
+            <h3>Une phrase.<br><em class="text-gold text-italic">Une facture envoyée.</em></h3>
+            <p>Vous décrivez la prestation en langage naturel depuis votre téléphone. L'app extrait les données, génère le PDF aux normes fiscales françaises et l'envoie directement au client par email.</p>
+            <p>Le tableau de bord vous donne une vue instantanée : CA du mois, factures en attente, encours client. Sans tableur, sans saisie double.</p>
+            <div class="cs-result-badge">
+              <span>TRAITEMENT COMPLET EN</span>
+              <span>28s</span>
+            </div>
+            <div class="cs-stack">
+              <span class="cs-stack-tag">N8N</span>
+              <span class="cs-stack-tag">OPENAI</span>
+              <span class="cs-stack-tag">GOOGLE WORKSPACE</span>
+              <span class="cs-stack-tag">TELEGRAM</span>
+            </div>
+            <a class="btn-gold" href="#" onclick="goToContact(); return false;">On construit la vôtre →</a>
+          </div>
+        </div>
+
+        <!-- Grille features -->
+        <div class="cs-features">
+          <div class="cs-feature reveal">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h4>Vous décrivez en 1 phrase</h4>
+            <p>Client, prestation, montant. Langage naturel, pas de formulaire. Depuis votre téléphone, sur le terrain.</p>
+          </div>
+          <div class="cs-feature reveal reveal-d1">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+              </svg>
+            </div>
+            <h4>L'IA extrait et structure</h4>
+            <p>Lignes de facturation, calcul TVA, numérotation continue. Zéro saisie manuelle, zéro erreur.</p>
+          </div>
+          <div class="cs-feature reveal reveal-d2">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <h4>PDF généré aux normes</h4>
+            <p>Mentions légales, logo, numérotation. Le PDF respecte les exigences fiscales françaises.</p>
+          </div>
+          <div class="cs-feature reveal">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </div>
+            <h4>Envoyée automatiquement</h4>
+            <p>Le PDF part directement au bon interlocuteur. Statut mis à jour dans le tableau de bord en temps réel.</p>
+          </div>
+          <div class="cs-feature reveal reveal-d1">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <h4>Analytics en temps réel</h4>
+            <p>CA du mois, encours, délai moyen de paiement. Vue instantanée depuis n'importe quel appareil.</p>
+          </div>
+          <div class="cs-feature reveal reveal-d2">
+            <div class="cs-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h4>Adaptable à votre secteur</h4>
+            <p>BTP, industrie, services. L'app s'adapte à votre format de facturation, vos clients, votre workflow.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- FEATURED PROJECTS -->
     <section>
       <div class="container">
@@ -2066,6 +2209,23 @@
   ======================================================== -->
   <script>
   (function() {
+
+    // ── Case study video ──────────────────────────────────────
+    window.toggleCsVideo = function() {
+      const video   = document.getElementById('cs-video');
+      const overlay = document.getElementById('cs-play-overlay');
+      if (!video) return;
+      if (video.paused) {
+        video.play();
+        overlay.classList.add('hidden');
+        video.addEventListener('ended', function() {
+          overlay.classList.remove('hidden');
+        }, { once: true });
+      } else {
+        video.pause();
+        overlay.classList.remove('hidden');
+      }
+    };
 
     // ── Page routing ─────────────────────────────────────────
     window.showPage = function(name) {
