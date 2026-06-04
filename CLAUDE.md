@@ -3,15 +3,17 @@
 ## Contexte
 
 ITYO est une agence fondée par Yannis, basée à Paris.
-Coeur de métier : concevoir et déployer des **applications IA sur mesure** pour les PME, TPE et startups françaises — facturation automatique, réception client, reporting, assistants, synchronisation d'outils.
+Coeur de métier : concevoir et déployer des **applications IA sur mesure** pour les TPE et PME du secteur industriel — automatisation de process internes, reporting, gestion documentaire, assistants métier, synchronisation d'outils.
+Yannis vient de l'industrie (Safran, Eaton) : il connaît les process, les contraintes et le vocabulaire de l'intérieur. C'est le principal différenciateur d'ITYO.
 Deuxième offre : **création de sites web** sur mesure, connectés aux automatisations dès le départ.
 
 ## Positionnement messaging (important)
 
+- **Cible principale : TPE/PME du BTP et de l'industrie.** BTP et industrie sont deux secteurs distincts en France — les deux sont ciblés car ils partagent les mêmes douleurs (process terrain/bureau, devis, facturation, suivi, conformité documentaire) et sont peu digitalisés.
 - ITYO ne vend pas de l'automatisation abstraite. On construit l'**app** qui règle le problème précis du client.
+- L'argument fort : Yannis vient de l'industrie (Safran, Eaton), il connaît les process de l'intérieur et parle le même langage que ses clients.
 - N8N est un outil d'implémentation interne, pas un argument de vente. Ne pas le mentionner en avant.
-- Les exemples (facturation, réception client, reporting) illustrent ce qu'on peut faire — ils ne limitent pas l'offre.
-- Chaque projet part de la situation du client, conçu avec lui. Le messaging insiste sur le sur-mesure infini.
+- Chaque projet part de la situation du client, conçu avec lui. Le messaging insiste sur le sur-mesure et l'expertise métier.
 - Création de site web : service complémentaire, présenté avec le label "Et aussi" pour signaler le registre différent.
 
 ## Stack technique du site
@@ -186,10 +188,11 @@ Dossier `logo-exports/` :
 | 10 — Carousel témoignages | ✅ DONE | Fan stack vanilla JS : éventail desktop, swipe 1 carte mobile, fond crème #F4F3F1, bordure or, hauteur dynamique |
 | 11 — Audit UX marketing | ✅ DONE | Section différenciation (ITYO vs freelance vs agence), FAQ accordion 5 questions (prix, technique, délai, maintenance, garantie), inversion urgency↔témoignages, témoignages enrichis (taille entreprise), sticky CTA mobile, suppression cadratins |
 | 12 — Crédibilité copy | ✅ DONE | Audit copy complet : suppression triplets verbaux IA, jargon tech (en prod, architecture, specs, ROI), reformulation "5 jours" → "première version testable en moins d'une semaine" partout (6 occurrences) |
-| 13 — Facteur humain | 🔜 NEXT | Section fondateur (photo Yannis + parcours + pourquoi ITYO) — besoin photo |
-| 14 — Étude de cas détaillée | 🔜 TODO | Salon de massage (N8N) : workflow complet, captures nœuds, chiffres réels, citation client. Les deux preuves côte à côte sur page Projets : Remotion (démo) + N8N (preuve réelle) = double effet conviction |
-| 15 — Vidéo Remotion | 🔜 TODO | App facturation (repo invoice-automation) : commande → PDF → email → confirmation. Scénario à valider, puis code Remotion. Faire EN PREMIER car repo dispo |
-| 16 — Stack technique | ✅ DONE | Carousel logo scroll infini vanilla JS : 9 logos via cdn.simpleicons.org, hover gold, fade latéral, pause hover, prefers-reduced-motion. Marquee copie : ton direct, factuel, zéro bullshit |
+| 13 — Facteur humain | 🔜 EN DERNIER | Section fondateur (photo Yannis + parcours Safran/Eaton + pourquoi ITYO) — besoin photo |
+| 14 — Études de cas BTP/industrie | ✅ DONE | Section "Exemple de réalisation · BTP & Industrie" sur page Projets : vidéo lightbox + description client + grille 6 features. Copy : "Ce qu'on a construit pour un client du secteur", pas de stack visible, CTA "Décrivez votre process →". |
+| 15 — Vidéo Remotion | ✅ DONE | 30s, 6 scènes, barre de progression étapes, scène Analytics, musique corpo (Scott Holmes "Corporate Ident"). Fichier : `ityo-remotion-invoice/out/invoice-promo.mp4`. Intégrée sur le site via lightbox. |
+| 16 — Stack technique | ✅ DONE | Carousel logo scroll infini vanilla JS : 9 logos via cdn.simpleicons.org, hover gold, fade latéral, pause hover, prefers-reduced-motion |
+| 17 — Preuve workflow N8N | 🔜 NEXT | Capture(s) d'écran d'un workflow N8N réel à intégrer dans l'étude de cas facturation. Objectif : montrer la vraie technique sans jargon. À faire après que Yannis ait préparé les screenshots. |
 
 ## Audit expert externe (mai 2026)
 
@@ -202,7 +205,7 @@ Points à corriger :
 - **Trop généraliste** : "on peut tout faire" réduit la valeur perçue
 - **Scores** : Crédibilité business 6.5/10 · Clarté offre 6/10 · Crédibilité technique perçue 5.5/10
 
-Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de projet.
+Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sectorielle native (Safran, Eaton). Stack à afficher : décision fin de projet.
 
 ## Méthodologie de travail — Plan d'exécution audit
 
@@ -223,28 +226,30 @@ Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de p
 | 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
 | 4 | Reformuler hero (cible explicite) | 🔜 TODO | Ajouter "Pour les PME, indépendants et startups qui veulent automatiser sans recruter" |
 | 5 | Spécialisation affichée | 🔜 TODO | "Spécialité : automatisation IA pour PME de services." + ligne secondaire sur mesure |
-| 6 | Enrichir études de cas | 🔜 TODO | 4 blocs par projet : Problème · Solution (workflow) · Stack · Résultat |
+| 6 | Enrichir études de cas | ✅ DONE | Section "Exemple de réalisation" sur page Projets : demo layout (vidéo lightbox + texte) + grille 6 features. Prochaine étape : ajouter capture workflow N8N comme preuve technique. |
 | 7 | Section "Comment ça marche" | ⚠️ EXISTE | Version actuelle : 4 étapes (Vous décrivez / On conçoit / Version testable / Ça tourne). Vérifier si reformulation vers Brief / Prototype / Tests / Livraison est souhaitée |
 
-### Contenu préparé pour [6] Études de cas
+### Contenu préparé pour [6] Études de cas — projets BTP/industrie uniquement
 
-**Projet 1 — Réceptionniste IA (salon de massage)**
-- Problème : appels manqués hors heures d'ouverture, perte directe de réservations
-- Solution : appel entrant → agent IA vocal → qualification → prise de RDV automatique → notification gérant
-- Stack : N8N · OpenAI · Calendly
-- Résultat : 70% des appels traités automatiquement, 0 réservation perdue hors horaires
+**Projet A — App facturation automatique** ✅ BTP & Industrie
+- Applicable : BTP (factures chantier, situations de travaux) · Industrie (commandes fournisseurs, bons de livraison)
+- Problème : génération manuelle des factures, chronophage et source d'erreurs
+- Solution : commande → parsing IA → génération PDF → envoi email → confirmation automatique
+- Stack : N8N · OpenAI · Google Workspace
+- Résultat : facture générée et envoyée en 30 secondes
+- Preuve vidéo : ✅ vidéo Remotion 30s intégrée sur le site (lightbox page Projets)
+- Preuve workflow : 🔜 capture N8N à ajouter dans la même section
 
-**Projet 2 — Bot Telegram multi-fonction**
-- Problème : gestion manuelle factures, mails, agenda chronophage pour indépendant
-- Solution : commande Telegram → parsing IA → action (facture / résumé mail / événement calendar / log bancaire)
+**Projet B — Bot Telegram multi-fonction** ✅ Applicable BTP & Industrie (reframé)
+- Applicable : chef de chantier / responsable production qui gère admin depuis le terrain
+- Problème : gestion administrative chronophage depuis le terrain (factures, mails, agenda, suivi)
+- Solution : commande Telegram → parsing IA → action (facture / résumé mail / événement calendar / log)
 - Stack : N8N · OpenAI · Telegram Bot API · Google Workspace
 - Résultat : 4 tâches administratives automatisées, gain estimé 3h/semaine
 
-**Projet 3 — Bot météo / conseil vestimentaire**
-- Problème : démo technique vitrine pour illustrer capacités automatisation vocale
-- Solution : commande vocale → météo temps réel → suggestion tenue → réponse vocale générée
-- Stack : N8N · OpenAI · Weather API · TTS
-- Résultat : démo fonctionnelle livrée en 48h
+**Projets écartés de la page détail :**
+- Réceptionniste IA salon de massage → hors cible BTP/industrie
+- Bot météo/style → démo technique, hors cible
 
 ## Déploiement
 
@@ -278,5 +283,6 @@ Cible confirmée : TPE/PME tous secteurs. Stack à afficher : décision fin de p
 
 ## Prochaines étapes
 
-1. Remplacer les 3 témoignages placeholders par les vrais avis clients
+1. **Capture workflow N8N** — Yannis prépare un ou plusieurs screenshots du workflow facturation dans N8N. On l'intègre dans la section étude de cas (dessous ou à côté de la vidéo) pour montrer la vraie technique sans jargon. Format attendu : screenshot(s) de l'interface N8N avec les nœuds visibles.
+2. Remplacer les 3 témoignages placeholders par les vrais avis clients
 2. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
