@@ -188,7 +188,7 @@ Dossier `logo-exports/` :
 | 10 — Carousel témoignages | ✅ DONE | Fan stack vanilla JS : éventail desktop, swipe 1 carte mobile, fond crème #F4F3F1, bordure or, hauteur dynamique |
 | 11 — Audit UX marketing | ✅ DONE | Section différenciation (ITYO vs freelance vs agence), FAQ accordion 5 questions (prix, technique, délai, maintenance, garantie), inversion urgency↔témoignages, témoignages enrichis (taille entreprise), sticky CTA mobile, suppression cadratins |
 | 12 — Crédibilité copy | ✅ DONE | Audit copy complet : suppression triplets verbaux IA, jargon tech (en prod, architecture, specs, ROI), reformulation "5 jours" → "première version testable en moins d'une semaine" partout (6 occurrences) |
-| 13 — Facteur humain | 🔜 EN DERNIER | Section fondateur (photo Yannis + parcours Safran/Eaton + pourquoi ITYO) — besoin photo |
+| 13 — Facteur humain | ✅ DONE | Section équipe page Vision : Yannis O. (Procurement Specialist IT · industrie aéronautique) + Wissam Z. (Ingénieur BTP · dev). Photos N&B, citation 1ère personne, tags, pas de mention des employeurs. |
 | 14 — Études de cas BTP/industrie | ✅ DONE | Section "Exemple de réalisation · BTP & Industrie" sur page Projets : vidéo lightbox + description client + grille 6 features. Copy : "Ce qu'on a construit pour un client du secteur", pas de stack visible, CTA "Décrivez votre process →". |
 | 15 — Vidéo Remotion | ✅ DONE | 30s, 6 scènes, barre de progression étapes, scène Analytics, musique corpo (Scott Holmes "Corporate Ident"). Fichier : `ityo-remotion-invoice/out/invoice-promo.mp4`. Intégrée sur le site via lightbox. |
 | 16 — Stack technique | ✅ DONE | Carousel logo scroll infini vanilla JS : 9 logos via cdn.simpleicons.org, hover gold, fade latéral, pause hover, prefers-reduced-motion |
@@ -224,11 +224,11 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 |---|---|---|---|
 | 1 | Reformuler promesse "5 jours" | ✅ DONE | Phase 12 — "première version testable en moins d'une semaine" (6 occurrences) |
 | 2 | Section stack techniques | ✅ DONE | Carousel logo scroll infini, 9 outils : N8N · OpenAI · Claude API · Supabase · Google Workspace · Vercel · React.js · Cursor · GitHub |
-| 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
+| 3 | Section équipe | ✅ DONE | Page Vision, entre Horizons et Contact. Yannis O. + Wissam Z. Photos réelles, 1ère personne, sans mention employeurs. |
 | 4 | Reformuler hero (cible explicite) | ✅ DONE | hero-sub : "Pour les TPE et PME du BTP et de l'industrie. Votre secteur, vos outils..." — plus précis que prévu |
 | 5 | Spécialisation affichée | ✅ DONE | Stats bar : "Spécialistes BTP & Industrie · Automatisation IA" · hero-sub cible explicite |
 | 6 | Enrichir études de cas | ✅ DONE | Section "Exemple de réalisation" + pipeline 5 nœuds + copy "45 min par facture, on a rendu ça automatique". Modif complète. |
-| 7 | Section "Comment ça marche" | ⚠️ EXISTE | Version actuelle : 4 étapes (Vous décrivez / On conçoit / Version testable / Ça tourne). Vérifier si reformulation vers Brief / Prototype / Tests / Livraison est souhaitée |
+| 7 | Section "Comment ça marche" | ✅ GARDÉ | Version originale conservée telle quelle — validée par Yannis. |
 
 ### Contenu préparé pour [6] Études de cas — projets BTP/industrie uniquement
 
@@ -287,9 +287,21 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 10. **FAQ accordion** (5 questions) ← nouveau
 11. CTA final
 
+## Section équipe — détail
+
+**Page** : Vision, entre "Les horizons" et le formulaire contact.
+**Fichiers photos** : `assets/yannis.jpg` + `assets/wissam.jpg` (N&B, portraits pro)
+**Règle** : pas de mention des anciens employeurs sur le site (contexte interne ok dans CLAUDE.md)
+
+**Yannis O.** — Fondateur · Automatisation & IA
+- Background : Procurement Specialist IT, industrie aéronautique
+- Tags site : Industrie aéronautique · Procurement IT
+
+**Wissam Z.** — Co-fondateur · Ingénierie & Développement
+- Background : Ingénieur BTP, développeur
+- Tags site : Ingénieur BTP · Développement · Process terrain
+
 ## Prochaines étapes
 
-1. **Modif 3 — Section fondateur** : Yannis · parcours Safran/Eaton · photo (placeholder "Y" en attendant)
-2. **Modif 7 — Section "Comment ça marche"** : vérifier si reformulation souhaitée
-3. Remplacer les 3 témoignages placeholders par les vrais avis clients
-4. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
+1. Remplacer les 3 témoignages placeholders par les vrais avis clients
+2. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
