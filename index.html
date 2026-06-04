@@ -1117,6 +1117,21 @@
 
     .cs-workflow { padding: 48px 0 72px; border-top: 1px solid rgba(201,168,76,0.1); text-align: center; }
     .cs-workflow-label { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(248,245,238,0.35); margin-bottom: 36px; }
+    /* ===== FOUNDERS ===== */
+    .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(201,168,76,.07); margin-top: 56px; }
+    .founder-card { background: #1B1B26; padding: 48px 40px; display: flex; gap: 36px; align-items: flex-start; }
+    .founder-photo { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: center top; flex-shrink: 0; filter: grayscale(100%); border: 1px solid rgba(201,168,76,.25); }
+    .founder-photo-placeholder { width: 96px; height: 96px; border-radius: 50%; background: rgba(201,168,76,.08); border: 1px solid rgba(201,168,76,.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Cormorant Garamond', serif; font-size: 28px; color: rgba(201,168,76,.5); }
+    .founder-body { flex: 1; }
+    .founder-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #F8F5EE; margin-bottom: 4px; }
+    .founder-role { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; }
+    .founder-bio { font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(248,245,238,.52); line-height: 1.8; margin-bottom: 16px; }
+    .founder-quote { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: rgba(248,245,238,.75); line-height: 1.6; padding-left: 14px; border-left: 1px solid rgba(201,168,76,.35); }
+    .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+    .founder-tag { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(201,168,76,.6); border: 1px solid rgba(201,168,76,.18); padding: 3px 10px; border-radius: 2px; }
+    @media (max-width: 900px) { .founders-grid { grid-template-columns: 1fr; } .founder-card { padding: 40px 28px; } }
+    @media (max-width: 640px) { .founder-card { flex-direction: column; gap: 24px; } .founder-photo { width: 80px; height: 80px; } }
+
     .cs-workflow-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
     .cs-workflow-nodes { display: inline-flex; align-items: center; gap: 0; min-width: max-content; }
     .cs-node { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100px; }
@@ -1407,6 +1422,54 @@
               <li>Peu adapté aux PME et TPE</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDERS -->
+    <section style="padding: 100px 0; border-top: 1px solid rgba(201,168,76,.07);">
+      <div class="container">
+        <div class="split-header" style="margin-bottom: 0;">
+          <div>
+            <p class="eyebrow reveal" style="margin-bottom: 16px;">Qui sommes-nous</p>
+            <h2 class="display-md reveal reveal-d1">L'expertise terrain<br><em class="text-italic text-gold">de l'intérieur.</em></h2>
+          </div>
+          <p class="reveal reveal-d2" style="font-size: 14px; color: rgba(248,245,238,.45); line-height: 1.85; max-width: 40ch;">Pas une agence généraliste. Deux profils qui connaissent votre secteur avant de toucher au code.</p>
+        </div>
+        <div class="founders-grid">
+
+          <div class="founder-card reveal">
+            <img src="assets/yannis.jpg" alt="Yannis Ouchene" class="founder-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="founder-photo-placeholder" style="display:none;">Y</div>
+            <div class="founder-body">
+              <p class="founder-name">Yannis Ouchene</p>
+              <p class="founder-role">Fondateur · Automatisation & IA</p>
+              <p class="founder-bio">Acheteur IT en industrie aéronautique pendant plusieurs années, chez des groupes comme Safran et Eaton. J'ai vu de l'intérieur comment les équipes terrain perdent du temps : outils non connectés, saisies manuelles, process qui ne remontent jamais au bon endroit.</p>
+              <p class="founder-quote">"Je sais ce dont vous avez besoin parce que j'ai été de votre côté."</p>
+              <div class="founder-tags">
+                <span class="founder-tag">Industrie aéronautique</span>
+                <span class="founder-tag">Achats IT</span>
+                <span class="founder-tag">Safran · Eaton</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="founder-card reveal reveal-d1">
+            <img src="assets/wissam.jpg" alt="Wissam Z." class="founder-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="founder-photo-placeholder" style="display:none;">W</div>
+            <div class="founder-body">
+              <p class="founder-name">Wissam Z.</p>
+              <p class="founder-role">Co-fondateur · Ingénierie & Développement</p>
+              <p class="founder-bio">Ingénieur BTP de formation, passé au développement et à l'automatisation de process. Double compétence rare : il comprend les contraintes du chantier et les contraintes du code. Il sait ce que ça coûte de gérer un chantier avec des outils qui datent d'une autre époque.</p>
+              <p class="founder-quote">"Ce qu'on construit, on l'aurait voulu plus tôt dans nos anciens jobs."</p>
+              <div class="founder-tags">
+                <span class="founder-tag">Ingénierie BTP</span>
+                <span class="founder-tag">Développement</span>
+                <span class="founder-tag">Process terrain</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
