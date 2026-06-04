@@ -225,8 +225,8 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 | 1 | Reformuler promesse "5 jours" | ✅ DONE | Phase 12 — "première version testable en moins d'une semaine" (6 occurrences) |
 | 2 | Section stack techniques | ✅ DONE | Carousel logo scroll infini, 9 outils : N8N · OpenAI · Claude API · Supabase · Google Workspace · Vercel · React.js · Cursor · GitHub |
 | 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
-| 4 | Reformuler hero (cible explicite) | 🔜 TODO | Ajouter "Pour les PME, indépendants et startups qui veulent automatiser sans recruter" |
-| 5 | Spécialisation affichée | 🔜 TODO | "Spécialité : automatisation IA pour PME de services." + ligne secondaire sur mesure |
+| 4 | Reformuler hero (cible explicite) | ✅ DONE | hero-sub : "Pour les TPE et PME du BTP et de l'industrie. Votre secteur, vos outils..." — plus précis que prévu |
+| 5 | Spécialisation affichée | ✅ DONE | Stats bar : "Spécialistes BTP & Industrie · Automatisation IA" · hero-sub cible explicite |
 | 6 | Enrichir études de cas | ✅ DONE | Section "Exemple de réalisation" + pipeline 5 nœuds + copy "45 min par facture, on a rendu ça automatique". Modif complète. |
 | 7 | Section "Comment ça marche" | ⚠️ EXISTE | Version actuelle : 4 étapes (Vous décrivez / On conçoit / Version testable / Ça tourne). Vérifier si reformulation vers Brief / Prototype / Tests / Livraison est souhaitée |
 
@@ -290,7 +290,6 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 ## Prochaines étapes
 
 1. **Modif 3 — Section fondateur** : Yannis · parcours Safran/Eaton · photo (placeholder "Y" en attendant)
-2. **Modif 4 — Reformuler hero** : cible explicite BTP/industrie dans le sous-titre hero
-3. **Modif 5 — Spécialisation affichée** : ligne "Spécialité BTP & Industrie" visible
-4. Remplacer les 3 témoignages placeholders par les vrais avis clients
-5. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
+2. **Modif 7 — Section "Comment ça marche"** : vérifier si reformulation souhaitée
+3. Remplacer les 3 témoignages placeholders par les vrais avis clients
+4. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
