@@ -192,7 +192,8 @@ Dossier `logo-exports/` :
 | 14 — Études de cas BTP/industrie | ✅ DONE | Section "Exemple de réalisation · BTP & Industrie" sur page Projets : vidéo lightbox + description client + grille 6 features. Copy : "Ce qu'on a construit pour un client du secteur", pas de stack visible, CTA "Décrivez votre process →". |
 | 15 — Vidéo Remotion | ✅ DONE | 30s, 6 scènes, barre de progression étapes, scène Analytics, musique corpo (Scott Holmes "Corporate Ident"). Fichier : `ityo-remotion-invoice/out/invoice-promo.mp4`. Intégrée sur le site via lightbox. |
 | 16 — Stack technique | ✅ DONE | Carousel logo scroll infini vanilla JS : 9 logos via cdn.simpleicons.org, hover gold, fade latéral, pause hover, prefers-reduced-motion |
-| 17 — Preuve workflow N8N | 🔜 NEXT | Capture(s) d'écran d'un workflow N8N réel à intégrer dans l'étude de cas facturation. Objectif : montrer la vraie technique sans jargon. À faire après que Yannis ait préparé les screenshots. |
+| 17 — Preuve workflow N8N | ✅ DONE | Pipeline 5 nœuds HTML/CSS sous la grille features (page Projets) : Google Sheets → Mise en forme → PDF → Gmail → Dashboard. Sans mention N8N, sans fichier image. Label : "Dans les coulisses · 5 étapes, aucune intervention". |
+| 18 — Recentrage projets BTP | ✅ DONE | Featured cards page Projets remplacées : Rapport de chantier + Assistant terrain + Suivi devis/relances. Format avant/après + punchline. Salon de massage et météo/style retirés. |
 
 ## Audit expert externe (mai 2026)
 
@@ -226,7 +227,7 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 | 3 | Section fondateur | 🔜 TODO | Yannis · parcours Safran/Eaton · besoin photo (placeholder "Y" en attendant) |
 | 4 | Reformuler hero (cible explicite) | 🔜 TODO | Ajouter "Pour les PME, indépendants et startups qui veulent automatiser sans recruter" |
 | 5 | Spécialisation affichée | 🔜 TODO | "Spécialité : automatisation IA pour PME de services." + ligne secondaire sur mesure |
-| 6 | Enrichir études de cas | ✅ DONE | Section "Exemple de réalisation" sur page Projets : demo layout (vidéo lightbox + texte) + grille 6 features. Prochaine étape : ajouter capture workflow N8N comme preuve technique. |
+| 6 | Enrichir études de cas | ✅ DONE | Section "Exemple de réalisation" + pipeline 5 nœuds + copy "45 min par facture, on a rendu ça automatique". Modif complète. |
 | 7 | Section "Comment ça marche" | ⚠️ EXISTE | Version actuelle : 4 étapes (Vous décrivez / On conçoit / Version testable / Ça tourne). Vérifier si reformulation vers Brief / Prototype / Tests / Livraison est souhaitée |
 
 ### Contenu préparé pour [6] Études de cas — projets BTP/industrie uniquement
@@ -247,9 +248,14 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 - Stack : N8N · OpenAI · Telegram Bot API · Google Workspace
 - Résultat : 4 tâches administratives automatisées, gain estimé 3h/semaine
 
-**Projets écartés de la page détail :**
-- Réceptionniste IA salon de massage → hors cible BTP/industrie
-- Bot météo/style → démo technique, hors cible
+**Featured cards page Projets (3 cartes affichées) :**
+- Rapport de chantier · Génération automatique — BTP & Construction
+- Assistant terrain multi-fonctions — Gestion & terrain (Telegram reframé BTP)
+- Suivi devis & relances clients — BTP & Industrie
+
+**Projets écartés des featured cards :**
+- Réceptionniste IA salon de massage → hors cible, déplacé hors featured
+- Bot météo/style → démo technique, hors cible, retiré
 
 ## Déploiement
 
@@ -283,6 +289,8 @@ Cible confirmée : TPE/PME du BTP et de l'industrie. Yannis = crédibilité sect
 
 ## Prochaines étapes
 
-1. **Capture workflow N8N** — Yannis prépare un ou plusieurs screenshots du workflow facturation dans N8N. On l'intègre dans la section étude de cas (dessous ou à côté de la vidéo) pour montrer la vraie technique sans jargon. Format attendu : screenshot(s) de l'interface N8N avec les nœuds visibles.
-2. Remplacer les 3 témoignages placeholders par les vrais avis clients
-2. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
+1. **Modif 3 — Section fondateur** : Yannis · parcours Safran/Eaton · photo (placeholder "Y" en attendant)
+2. **Modif 4 — Reformuler hero** : cible explicite BTP/industrie dans le sous-titre hero
+3. **Modif 5 — Spécialisation affichée** : ligne "Spécialité BTP & Industrie" visible
+4. Remplacer les 3 témoignages placeholders par les vrais avis clients
+5. Favicon — utiliser `favicon-32.png` depuis `logo-exports/` (ajouter dans Netlify)
